@@ -118,7 +118,7 @@
 
 
 
-+ (void) lmsGetTeacherStudyClassesFrom:(NSString*)domain teacherId:(NSNumber*)teacherid OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
++ (void) lmsGetTeacherStudyClassesFrom:(NSString*)domain teacherId:(NSNumber*)teacherid OnSuccessCall:(void (^)(NSArray *)) success onFailureCall:(void (^)(NSError*)) faliure{
     NSMutableString *url = [[NSMutableString alloc]init];
    
     [url appendString:domain];
@@ -135,7 +135,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         if(error)
             faliure(error);
         else

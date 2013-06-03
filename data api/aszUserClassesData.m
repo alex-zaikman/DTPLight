@@ -12,6 +12,17 @@ user:{
  logOut:   //url
  
  }
+ 
+ classes:[
+ {
+ classId:
+ schoolId:
+ className:
+ classImageId:
+ classImageUrl:  // starting with "/"
+ },....
+ 
+ ]
  */
 
 #import "aszUserClassesData.h"
@@ -49,15 +60,43 @@ void (^fnfaliure)(NSError *);
         NSNumber *userId = [userDic valueForKey:@"userId"];
         
     //get classes for user
-        [LmsConnectionRestApi lmsGetTeacherStudyClassesFrom:domain teacherId:userId  OnSuccessCall:^(NSDictionary* ddata){
-            
-            
-          //      NSString *debugString = [aszJsonDictionarryManip dictionarryToPrintableString:ddata];////debug
+        [LmsConnectionRestApi lmsGetTeacherStudyClassesFrom:domain teacherId:userId  OnSuccessCall:^(NSArray* ddata){
                 
                 //parce and extract relevant data
                 
+            NSMutableArray *classes = [[NSMutableArray alloc]initWithCapacity:[ddata count]];
+            for (NSDictionary *dclass in ddata) {
+                
+                NSMutableDictionary *class =[[NSMutableDictionary alloc]initWithCapacity:5];
+                
+                [class setValue:[dclass valueForKey:@"id"] forKey:@"classId"];
+                [class setValue:[dclass valueForKey:@"schoolId"] forKey:@"schoolId"];
+                [class setValue:[dclass valueForKey:@"name"] forKey:@"className"];
+                
+                NSNumber *imageId = [dclass valueForKey:@"imageId"];
+                [class setValue:imageId forKey:@"classImageId"];
+                //get url for image
+                
+                NSMutableString *imgUrl = [[NSMutableString alloc]init];
+                
+                
+                [imgUrl appendString:@"/lms/rest/schools/"];
+                [imgUrl appendString:[[dclass valueForKey:@"schoolId"]stringValue]];
+                [imgUrl appendString:@"/images/"];
+                [imgUrl appendString:[imageId stringValue]];
+                
+                [class setValue:[imgUrl copy] forKey:@"classImageUrl"];
+                
+                //add the class to classes
+               [classes addObject:[class copy]];
+                
+            }
             
-                fnsuccess([self.retData copy]);
+            //add classes to ret data
+             [self.retData setObject:classes forKey:@"classes"];
+            
+            //return with success
+            fnsuccess([self.retData copy]);
           
             
         } onFailureCall:fnfaliure];

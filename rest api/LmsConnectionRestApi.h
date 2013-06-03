@@ -33,7 +33,7 @@
 /*
  * Get study classes assigned to the teacher
 */
-+ (void) lmsGetTeacherStudyClassesFrom:(NSString*)domain teacherId:(NSNumber*)teacherid OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
++ (void) lmsGetTeacherStudyClassesFrom:(NSString*)domain teacherId:(NSNumber*)teacherid OnSuccessCall:(void (^)(NSArray *)) success onFailureCall:(void (^)(NSError*)) faliure;
 
 /*
  * Get study classes of a student
