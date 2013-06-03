@@ -9,7 +9,7 @@
             <objects>
                 <viewController id="ngg-S9-3vE" customClass="aszLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lqh-MI-2pr">
-                        <rect key="frame" x="0.0" y="20" width="703" height="748"/>
+                        <rect key="frame" x="0.0" y="64" width="703" height="704"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adE-Jw-e5W">
@@ -133,6 +133,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="doc-7F-61P"/>
                     <connections>
                         <outlet property="classesIB" destination="m5F-Fz-6W0" id="cRN-kY-9Xu"/>
                         <outlet property="debug" destination="5XB-iw-d3i" id="J5q-lF-EK1"/>
@@ -142,20 +143,19 @@
                         <outlet property="progrees" destination="JYz-OX-zdP" id="jDb-z6-Wci"/>
                         <outlet property="userName" destination="NMx-EV-43G" id="RR8-VI-E0I"/>
                         <outlet property="view" destination="lqh-MI-2pr" id="WAL-GF-z2t"/>
-                        <segue destination="Mf1-JK-rl5" kind="push" identifier="test" id="AdM-R2-ZGm"/>
                         <segue destination="8Ww-Ox-dBY" kind="push" identifier="classes" id="Mr2-Xy-IMZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hr-1q-o22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="301" y="532"/>
+            <point key="canvasLocation" x="1702" y="548"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="6mq-Qe-ohm">
             <objects>
                 <viewController id="Mf1-JK-rl5" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DwP-U3-SMP">
-                        <rect key="frame" x="0.0" y="20" width="703" height="748"/>
+                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOj-qj-Qq6">
@@ -172,20 +172,87 @@
                             <constraint firstItem="NOj-qj-Qq6" firstAttribute="top" secondItem="DwP-U3-SMP" secondAttribute="top" type="default" id="g6z-Ps-OF6"/>
                             <constraint firstItem="NOj-qj-Qq6" firstAttribute="bottom" secondItem="DwP-U3-SMP" secondAttribute="bottom" type="default" id="rrF-Gd-QzN"/>
                         </constraints>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="sNr-9C-Plz"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yd7-Fj-VZC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1339" y="486"/>
+            <point key="canvasLocation" x="-2640" y="2726"/>
+        </scene>
+        <!--Asz Course Overview Master View Controller-->
+        <scene sceneID="e5X-T3-axc">
+            <objects>
+                <tableViewController id="8QB-rS-iJ3" customClass="aszCourseOverviewMasterViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4Uo-qh-vgq">
+                        <rect key="frame" x="0.0" y="64" width="320" height="704"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bXP-74-hSm">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8QB-rS-iJ3" id="c7R-OV-71D"/>
+                            <outlet property="delegate" destination="8QB-rS-iJ3" id="t3r-Mo-rBP"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="lJi-5x-1mW"/>
+                    <connections>
+                        <outlet property="view" destination="4Uo-qh-vgq" id="x9R-1r-HbL"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2x5-CS-dkF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3780" y="-780"/>
+        </scene>
+        <!--Asz Course Overview Detail View Controller-->
+        <scene sceneID="Ghk-EG-did">
+            <objects>
+                <tableViewController id="dFc-b6-Wpi" customClass="aszCourseOverviewDetailViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tN6-AG-xaa">
+                        <rect key="frame" x="0.0" y="64" width="703" height="704"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LfO-tA-WNT">
+                                <rect key="frame" x="0.0" y="22" width="703" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="703" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dFc-b6-Wpi" id="kKu-wG-d5F"/>
+                            <outlet property="delegate" destination="dFc-b6-Wpi" id="awV-mZ-soG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="ZEc-AR-z3i"/>
+                    <connections>
+                        <outlet property="view" destination="tN6-AG-xaa" id="cjh-PQ-dSw"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QhM-fq-Jy4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3804" y="540"/>
         </scene>
         <!--Asz Classes View Controller-->
         <scene sceneID="4He-Mn-BQp">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="8Ww-Ox-dBY" customClass="aszClassesViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="oeg-Mi-8zk">
-                        <rect key="frame" x="0.0" y="20" width="703" height="748"/>
+                        <rect key="frame" x="0.0" y="64" width="703" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="adT-9A-ngo">
@@ -213,15 +280,18 @@
                     <navigationItem key="navigationItem" id="DV4-12-Nz9"/>
                     <connections>
                         <outlet property="view" destination="oeg-Mi-8zk" id="sHK-6j-F6F"/>
+                        <segue destination="8QB-rS-iJ3" kind="push" identifier="coursemaster" splitViewControllerTargetIndex="0" id="HW5-xc-adf"/>
+                        <segue destination="dFc-b6-Wpi" kind="push" identifier="coursedetail" splitViewControllerTargetIndex="1" id="HBW-nZ-f0Z"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SeE-Zc-kxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1118" y="1500"/>
+            <point key="canvasLocation" x="2606" y="548"/>
         </scene>
         <!--Table View Controller - Root View Controller-->
         <scene sceneID="0MI-1m-1Ua">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I86-Jz-RDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="pZm-LD-5xe" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="asas" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wcT-d2-Nz1">
                         <rect key="frame" x="0.0" y="64" width="320" height="704"/>
@@ -246,9 +316,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="sZv-k9-ffl"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I86-Jz-RDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="869" y="-660"/>
+            <point key="canvasLocation" x="-107" y="-724"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4WT-t4-g9w">
@@ -263,7 +332,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ikn-5u-Wbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="-660"/>
+            <point key="canvasLocation" x="-731" y="-732"/>
         </scene>
         <!--Asz Split View Controller-->
         <scene sceneID="8yt-nT-eC7">
@@ -273,14 +342,81 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <segue destination="lWG-9W-0xL" kind="relationship" relationship="masterViewController" id="T0d-75-s92"/>
-                        <segue destination="ngg-S9-3vE" kind="relationship" relationship="detailViewController" id="UAn-YK-K5c"/>
+                        <segue destination="oOA-Pj-GoM" kind="relationship" relationship="detailViewController" id="UAn-YK-K5c"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tu6-zl-t7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-767" y="-304"/>
+            <point key="canvasLocation" x="-1799" y="600"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zLa-D3-Zrp">
+            <objects>
+                <navigationController id="oOA-Pj-GoM" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pwm-1D-sra">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ngg-S9-3vE" kind="relationship" relationship="rootViewController" id="0FJ-Yy-ezh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yKL-cn-oFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="453" y="548"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        </class>
+        <class className="aszClassesViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszClassesViewCell.h"/>
+        </class>
+        <class className="aszClassesViewController" superclassName="UICollectionViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszClassesViewController.h"/>
+        </class>
+        <class className="aszCourseOverviewDetailViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszCourseOverviewDetailViewController.h"/>
+        </class>
+        <class className="aszCourseOverviewMasterViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszCourseOverviewMasterViewController.h"/>
+        </class>
+        <class className="aszLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="login:"/>
+                <relationship kind="action" name="logout:"/>
+                <relationship kind="outlet" name="classesIB" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="debug" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="loginIB" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="logoutIB" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="progrees" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="userName" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="aszSplitViewController" superclassName="UISplitViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSplitViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

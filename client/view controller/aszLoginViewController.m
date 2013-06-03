@@ -37,6 +37,7 @@
 
 @property (strong,nonatomic) aszLogin *loggin;
 
+@property (strong,nonatomic) NSDictionary *dataToPass;
 @end
 
 @implementation aszLoginViewController
@@ -51,7 +52,7 @@
 @synthesize data=_data;
 @synthesize loggin=_loggin;
 @synthesize classesIB=_classesIB;
-
+@synthesize dataToPass=_dataToPass;
 
 
 -(void) viewNeedsUpdate{
@@ -81,14 +82,22 @@
 
 
 - (IBAction)goToClasses {
+
     aszUserClassesData *classes = [[aszUserClassesData alloc]init];
     
     NSString *domain = [[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"];
     
-    [classes getDataQueryDomain:domain OnSuccessCall:nil onFailureCall:nil];
+    [classes getDataQueryDomain:domain OnSuccessCall:^(NSDictionary *data) {
+        
+        self.dataToPass=data;
+        
+        [self performSegueWithIdentifier:@"classes" sender:self];
+        
+           } onFailureCall:^(NSError *e) {
+        self.debug.text = [e localizedDescription];
+    }];
+
      
-     
-     //[self performSegueWithIdentifier:@"classes" sender:self];
 }
 
 - (IBAction)login:(id)sender {
@@ -183,10 +192,15 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
 
     
-//    if([[segue identifier] isEqualToString:@"classes"]){
-//        [segue.destinationViewController performSelector:@selector(data:)
-//                                              withObject:   call api for classes   ];
-//    }
+    if([[segue identifier] isEqualToString:@"classes"]){
+        
+        [segue.destinationViewController performSelector:@selector(setData:)
+                                              withObject: self.dataToPass];
+        
+
+
+       
+    }
 }
 
 @end

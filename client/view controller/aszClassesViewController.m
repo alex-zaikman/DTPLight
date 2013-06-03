@@ -25,8 +25,8 @@
 // 1
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     
-   // return [(NSArray*)[self.data valueForKey:@"classes"]count];
-    return 0;
+    NSInteger i =[(NSArray*)[self.data valueForKey:@"classes"]count];
+   return i;
 }
 
 // 2
@@ -39,9 +39,9 @@
     
     aszClassesViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    NSString *url = (NSString*)[(NSDictionary*)[(NSArray*)[self.data valueForKey:@"classes"] objectAtIndex:indexPath.item] valueForKey:@"imageURL"];
+    NSString *url = (NSString*)[(NSDictionary*)[(NSArray*)[self.data valueForKey:@"classes"] objectAtIndex:indexPath.item] valueForKey:@"classImageUrl"];
     
-    url = [[[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"] stringByAppendingString: [@"/" stringByAppendingString:url]];
+    url = [[[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"]  stringByAppendingString:url];
     
     
     

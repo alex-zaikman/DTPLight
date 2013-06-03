@@ -37,14 +37,16 @@ user:{
 
 @implementation aszUserClassesData
 
-void (^fnsuccess)(NSDictionary *);
-void (^fnfaliure)(NSError *);
+
 
 @synthesize retData=_retData;
 
 -(void)getDataQueryDomain:(NSString*)domain OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
 
     self.retData = [[NSMutableDictionary alloc]init];
+    
+   __block void (^fnsuccess)(NSDictionary *);
+   __block void (^fnfaliure)(NSError *);
     
     fnsuccess=success;
     fnfaliure=faliure;
@@ -86,7 +88,7 @@ void (^fnfaliure)(NSError *);
                 [imgUrl appendString:[imageId stringValue]];
                 
                 [class setValue:[imgUrl copy] forKey:@"classImageUrl"];
-                
+                 
                 //add the class to classes
                [classes addObject:[class copy]];
                 

@@ -20,8 +20,13 @@
 }
 
 
--(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation{
-    return YES;
+-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientatio
+{
+    if ([vc respondsToSelector:@selector(showMe)]) {
+        return NO;
+    }else{
+        self.presentsWithGesture=NO;
+        return YES;
+    }
 }
-
 @end
