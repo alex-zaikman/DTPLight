@@ -56,7 +56,7 @@ void (^fnfaliure)(NSError *);
         
         [user setValue:[[data valueForKey:@"user"] valueForKey:@"lastName"] forKey:@"lastName"];
         
-        [user setValue:[[[data valueForKey:@"user"] valueForKey:@"role"]objectAtIndex:0 ]forKey:@"role"];
+        [user setValue:[[[data valueForKey:@"user"] valueForKey:@"roles"]objectAtIndex:0 ]forKey:@"role"];
         
         [user setValue:[[data valueForKey:@"user"] valueForKey:@"title"]forKey:@"title"];
         

@@ -1,4 +1,20 @@
 
+/*
+ :{
+ 
+ userId:
+ userName:
+ firstName:
+ lastName:
+ title:      //Mr,Ms ....
+ role:
+ schoolId
+ schoolName:
+ logOut:   //url
+ 
+ }
+ */
+
 
 #import <Foundation/Foundation.h>
 

@@ -8,6 +8,6 @@
 
 #import "aszCourseContentData.h"
 
-@implementation aszCourseContentData
+@implementation aszCourseContentData : NSObject 
 
 @end
