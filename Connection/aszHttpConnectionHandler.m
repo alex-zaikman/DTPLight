@@ -10,49 +10,33 @@
 
 @interface aszHttpConnectionHandler() <NSURLConnectionDelegate>
 
-@property NSURLConnection *connection;
+@property (nonatomic,strong) NSMutableData *urlData;
+@property (nonatomic,strong) NSURLConnection *urlConnection;
 
+@property (nonatomic,strong)  __block void  (^fnsuccess)(NSData *);
+@property (nonatomic,strong)  __block void  (^fnfaliure)(NSError *);
+    
 
 @end
 
 @implementation aszHttpConnectionHandler
 
-@synthesize connection=_connection;
-
-void (^fnsuccess)(NSDictionary *);
-void (^fnfaliure)(NSError *);
 
 
--(void)execRequest:(NSURLRequest*)request  OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure {
- 
-    fnsuccess=success;
-    fnfaliure=faliure;
+@synthesize urlData=_urlData;
+@synthesize urlConnection=_urlConnection;
+
+
+
+
+-(void)execRequest:(NSURLRequest*)request  OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure  {
+
+    self.fnsuccess=success;
+    self.fnfaliure=faliure;
     
-    self.connection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:YES];
+     self.urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.urlConnection start];
     
-}
-
-//connection call back
-
-- (void) didReceiveData:(NSData *)data{
-    
-    NSError *error;
-    NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data
-                                                        options:NSJSONReadingMutableContainers error:&error];
-    
-    fnsuccess(dic);
-}
-
-- (void) didFailWithError:(NSError *)error{
-    fnfaliure(error);
-}
-
-- (void) didReceiveResponse:(NSURLResponse *)response{
-    fnsuccess(nil);
-}
-
-- (void) didFinishLoading{
-    //
 }
 
 
@@ -62,8 +46,11 @@ void (^fnfaliure)(NSError *);
     
     NSString *vurl = url;
     
-    if(urlVars!=nil && [urlVars count]>0)
-        vurl = [url stringByAppendingString:[ aszHttpConnectionHandler paramsToString:urlVars]];
+    if(urlVars!=nil && [urlVars count]>0){
+        vurl = [vurl stringByAppendingString:@"?"];
+        vurl = [vurl stringByAppendingString:[ aszHttpConnectionHandler paramsToString:urlVars]];
+    
+    }
     
     NSMutableURLRequest * request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: vurl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
     
@@ -81,9 +68,9 @@ void (^fnfaliure)(NSError *);
 
 +(NSString*)paramsToString:(NSDictionary*)vars{
     
-    NSMutableString *getVars;
+    NSMutableString *getVars=[[NSMutableString alloc]init];
     
-    [getVars appendString:@"?"];
+  //  [getVars appendString:@"?"];
     
     NSEnumerator *it = [vars keyEnumerator];
     
@@ -93,11 +80,24 @@ void (^fnfaliure)(NSError *);
          getVars = [[getVars stringByAppendingString:[vars valueForKey:aKey]]mutableCopy];
          getVars = [[getVars stringByAppendingString:@"&"]mutableCopy];
      }
-    [getVars substringToIndex:[getVars length] - 1];
+   NSString*  ret = [getVars substringToIndex:[getVars length] - 1];
     
-    return getVars;
+    return ret;
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    self.urlData = [[NSMutableData alloc] init];
+}
 
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.urlData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    self.fnsuccess(self.urlData);
+}
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    self.fnfaliure(error);
+}
 
 @end

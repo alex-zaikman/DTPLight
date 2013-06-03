@@ -10,6 +10,13 @@
 @interface LmsConnectionRestApi : NSObject
 
 
++ (void) lmsPingLms:(NSString*)domain OnSuccessCall:(void (^)(NSString *)) success onFailureCall:(void (^)(NSError*)) faliure;
+
+
++ (void) lmsLoginLms:(NSString*)domain action:(NSString*)action postVars:(NSDictionary*)vars  OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure;
+
++ (void) lmsLogoutLms:(NSString*)domain OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure;
+
 /**
  *
  * Returns initial common data for application, such as user info, school info, translations. 
@@ -17,7 +24,7 @@
  * 
  * dictionaryModified is optional
  */
-+ (void) lmsGetAppDataFrom:(NSString*)domain dictionaryModified:(NSNumber*)modified OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
++ (void) lmsGetAppDataFrom:(NSString*)domain dictionaryModified:(NSNumber*)modified OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure;
 
 /**
  * Get dynamic image stored on server db (such as school logo, study class icon)
@@ -69,7 +76,7 @@
 
 + (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid   OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
 /*
- *  Get Course - Returns the full Course manifest associated to the user. 
+ *  Get Course + Returns the full Course manifest associated to the user. 
  */
 + (void) lmsCourseDataFrom:(NSString*)domain withId:(NSString*)courseid OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
 

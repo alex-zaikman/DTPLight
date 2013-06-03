@@ -10,4 +10,13 @@
 
 @interface aszJsonDictionarryManip : NSObject
 
++ (NSDictionary*) mergeTopLevelDictionarry:(NSDictionary*) dic1 with:(NSDictionary*) dic2;
+
++ (NSString *) dictionarryToPrintableString:(NSDictionary*) dic;
+
++ (id) deepCopyOf:(id) obj;
+
++(NSArray*)allObjFrom:(NSDictionary*)dic forkey:(NSString*)key;
+
+
 @end

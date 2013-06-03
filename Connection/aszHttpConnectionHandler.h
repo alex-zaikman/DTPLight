@@ -10,7 +10,7 @@
 
 @interface aszHttpConnectionHandler : NSObject
 
--(void)execRequest:(NSURLRequest*)request  OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
+-(void)execRequest:(NSURLRequest*)request  OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure;
 
 +(NSURLRequest*)requestWithUrl:(NSString*)url usingMethod:(NSString*)method withUrlParams: (NSDictionary*)urlVars andBodyData:(NSString*)bodyData;
 

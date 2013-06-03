@@ -14,6 +14,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithObject:@"https://cto.timetoknow.com" forKey:@"domain_preference"];
+    
+    [defaults registerDefaults:prefs];
+    [defaults synchronize];
+    
+    
     // Override point for customization after application launch.
     return YES;
 }

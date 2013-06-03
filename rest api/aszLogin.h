@@ -1,13 +1,20 @@
-//
-//  aszLogin.h
-//  DTPLight
-//
-//  Created by alex zaikman on 6/2/13.
-//  Copyright (c) 2013 alex zaikman. All rights reserved.
-//
+/*
+ 
+return userData
+ 
+ */
 
 #import <Foundation/Foundation.h>
 
 @interface aszLogin : NSObject
+
+- (void) LogInTo:(NSString*)domain asUser:(NSString *)user
+                                   withPassword:(NSString*)password
+                                   onSuccessCall:(void (^)(NSData *)) success
+                                   onFailureCall:(void (^)(NSError*)) faliure;
+
+
+-(void)logoutFrom:(NSString*)domain  onSuccessCall:(void (^)(NSData *)) success
+    onFailureCall:(void (^)(NSError*)) faliure;
 
 @end

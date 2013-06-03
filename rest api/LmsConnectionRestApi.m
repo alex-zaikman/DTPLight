@@ -1,3 +1,4 @@
+
 //
 //  LmsConnectionRestApi.m
 //  LmsRestConector
@@ -12,12 +13,61 @@
 @interface LmsConnectionRestApi()
 
 
-
 @end
 
 @implementation LmsConnectionRestApi
 
-+ (void) lmsGetAppDataFrom:(NSString*)domain dictionaryModified:(NSNumber*)modified OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
+
+
++ (void) lmsLogoutLms:(NSString*)domain OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure{
+    
+    NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:domain usingMethod:@"GET" withUrlParams: nil andBodyData: nil ];
+    
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:success onFailureCall:faliure];
+
+}
+
++ (void) lmsLoginLms:(NSString*)domain action:(NSString*)action postVars:(NSDictionary*)vars  OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure{
+    
+    
+    NSMutableString *url = [[NSMutableString alloc]init];
+    [url appendString:domain];
+    [url appendString:action];
+    
+    NSMutableString *bodydata =[[NSMutableString alloc]initWithString:[aszHttpConnectionHandler paramsToString:vars]];
+    
+    NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"POST" withUrlParams: nil andBodyData: bodydata ];
+    
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    
+}
+
+
++ (void) lmsPingLms:(NSString*)domain OnSuccessCall: (void (^)(NSString *)) success onFailureCall:(void (^)(NSError*)) faliure{
+    
+    NSMutableString *url = [[NSMutableString alloc]init];
+    [url appendString:domain];
+    [url appendString:@"/lms"];
+    
+    NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
+    
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* d){
+        
+        success([[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+    
+    } onFailureCall:faliure];
+    
+}
+
+
+
++ (void) lmsGetAppDataFrom:(NSString*)domain dictionaryModified:(NSNumber*)modified OnSuccessCall:(void (^)(NSData *)) success onFailureCall:(void (^)(NSError*)) faliure{
     
    
     //call get request with api suffix
@@ -29,13 +79,12 @@
   NSString *url = [domain stringByAppendingString:@"/lms/rest/appdata"];
     
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-         handler = [[aszHttpConnectionHandler   alloc]init];
 
  NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: vars andBodyData:nil];
 
- [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:success onFailureCall:faliure];
     
 }
 
@@ -49,14 +98,22 @@
     [url appendString:@"/images"];
     [url appendString:[imageid stringValue]];
 
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler =[[aszHttpConnectionHandler   alloc]init];
     
+
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-   [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
     
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 }
 
 
@@ -69,13 +126,22 @@
     [url appendString:[teacherid stringValue]];
     [url appendString:@"/studyclasses"];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+   
+   
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 }
 
 + (void) lmsGetStudentStudyClassesFrom:(NSString*)domain studentId:(NSNumber*)studentid OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
@@ -85,14 +151,21 @@
     [url appendString:@"/lms/rest/students/"];
     [url appendString:[studentid stringValue]];
     [url appendString:@"/studyclasses"];
-    
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 }
 
 + (void) lmsGetCoursesListFrom:(NSString*)domain byQuery:(NSString*)query OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
@@ -101,14 +174,21 @@
     
     NSString *url = [domain stringByAppendingString:@"/lms/rest/appdata"];
    
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: vars andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
     
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 }
 
 + (void) lmsGetCoursesListFrom:(NSString*)domain BySchoolId:(NSNumber*)schoolid OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
@@ -119,13 +199,21 @@
     [url appendString:[schoolid stringValue]];
     [url appendString:@"/courseinfos"];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 }
 
 
@@ -139,13 +227,22 @@
     [url appendString:[userid stringValue]];
     [url appendString:@"/usercourseinfos"];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+  
+
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
     
 }
 
@@ -158,13 +255,22 @@
     [url appendString:@"/lms/rest/userlibrary/courses/"];
     [url appendString:[courseid stringValue]];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
     
+  
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 
 }
 
@@ -178,13 +284,22 @@
     [url appendString:@"/lessons/"];
     [url appendString:lessonCid];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+   
+  
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
 }
 
 
@@ -197,13 +312,20 @@
     [url appendString:[userid stringValue]];
     [url appendString:@"/studyclassstates"];
 
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
     
 }
 
@@ -217,15 +339,23 @@
     [url appendString:[userid stringValue]];
     [url appendString:@"/studyclassstates"];
     
-    NSDictionary* vars =  [[NSDictionary alloc]initWithObjectsAndKeys:@"associated", associated?@"true":@"false" ,@"associated" , nil];
+    NSDictionary* vars =  [[NSDictionary alloc]initWithObjectsAndKeys:associated?@"true":@"false" ,@"associated" , nil];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
+ 
+    NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: vars andBodyData:nil];
     
-    NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
     
 }
 
@@ -238,13 +368,21 @@
     [url appendString:@"/lms/rest/userlibrary/courses/"];
     [url appendString:courseid];
     
-    static aszHttpConnectionHandler *handler;
-    if(!handler)
-        handler = [[aszHttpConnectionHandler   alloc]init];
-    
+   
     NSURLRequest* req =[aszHttpConnectionHandler requestWithUrl:url usingMethod:@"GET" withUrlParams: nil andBodyData:nil];
     
-    [handler execRequest:req OnSuccessCall:success onFailureCall:faliure];
+    aszHttpConnectionHandler *hndl = [[aszHttpConnectionHandler alloc]init];
+    
+    [hndl execRequest:req OnSuccessCall:^(NSData* data){
+        
+        NSError *error;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error)
+            faliure(error);
+        else
+            success(dictionary);
+        
+    } onFailureCall:faliure];
     
 }
 
