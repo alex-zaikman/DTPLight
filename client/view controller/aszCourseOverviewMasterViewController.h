@@ -10,6 +10,8 @@
 
 @interface aszCourseOverviewMasterViewController : UITableViewController
 
+@property (nonatomic,strong) NSDictionary *data;
+
 -(void)showMe;
 
 @end

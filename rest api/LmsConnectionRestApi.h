@@ -72,9 +72,9 @@
 /*
  *Get classes associated to user
  */
-+ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid associated:(BOOL)associated OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
++ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid associated:(BOOL)associated OnSuccessCall:(void (^)(NSArray *)) success onFailureCall:(void (^)(NSError*)) faliure;
 
-+ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid   OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
++ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid   OnSuccessCall:(void (^)(NSArray *)) success onFailureCall:(void (^)(NSError*)) faliure;
 /*
  *  Get Course + Returns the full Course manifest associated to the user. 
  */

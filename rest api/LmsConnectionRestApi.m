@@ -303,7 +303,7 @@
 }
 
 
-+ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid   OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
++ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid   OnSuccessCall:(void (^)(NSArray *)) success onFailureCall:(void (^)(NSError*)) faliure{
     
     NSMutableString *url = [[NSMutableString alloc]init];
     
@@ -319,7 +319,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         if(error)
             faliure(error);
         else
@@ -330,7 +330,7 @@
 }
 
 
-+ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid associated:(BOOL)associated  OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure{
++ (void) lmsAssociateCourseToUserFrom:(NSString*)domain toUserId:(NSNumber*)userid associated:(BOOL)associated  OnSuccessCall:(void (^)(NSArray *)) success onFailureCall:(void (^)(NSError*)) faliure{
     
     NSMutableString *url = [[NSMutableString alloc]init];
     
@@ -349,7 +349,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         if(error)
             faliure(error);
         else

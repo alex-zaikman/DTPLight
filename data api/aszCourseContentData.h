@@ -10,4 +10,6 @@
 
 @interface aszCourseContentData : NSObject
 
+-(void)getDataQueryDomain:(NSString*)domain forClassId:(NSInteger) cid OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
+
 @end

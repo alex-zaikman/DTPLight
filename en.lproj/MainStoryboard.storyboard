@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Asz Login View Controller-->
+        <!--Asz Login View Controller - Login-->
         <scene sceneID="yLM-MX-gIV">
             <objects>
                 <viewController id="ngg-S9-3vE" customClass="aszLoginViewController" sceneMemberID="viewController">
@@ -133,7 +133,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="doc-7F-61P"/>
+                    <navigationItem key="navigationItem" title="Login" id="doc-7F-61P"/>
                     <connections>
                         <outlet property="classesIB" destination="m5F-Fz-6W0" id="cRN-kY-9Xu"/>
                         <outlet property="debug" destination="5XB-iw-d3i" id="J5q-lF-EK1"/>
@@ -148,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hr-1q-o22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1702" y="548"/>
+            <point key="canvasLocation" x="1150" y="600"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="6mq-Qe-ohm">
@@ -177,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yd7-Fj-VZC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2640" y="2726"/>
+            <point key="canvasLocation" x="3008" y="1710"/>
         </scene>
         <!--Asz Course Overview Master View Controller-->
         <scene sceneID="e5X-T3-axc">
@@ -189,7 +189,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bXP-74-hSm">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="bXP-74-hSm">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -211,9 +211,9 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2x5-CS-dkF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3780" y="-780"/>
+            <point key="canvasLocation" x="3420" y="-556"/>
         </scene>
-        <!--Asz Course Overview Detail View Controller-->
+        <!--Asz Course Overview Detail View Controller - Table of contents-->
         <scene sceneID="Ghk-EG-did">
             <objects>
                 <tableViewController id="dFc-b6-Wpi" customClass="aszCourseOverviewDetailViewController" sceneMemberID="viewController">
@@ -223,7 +223,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LfO-tA-WNT">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="LfO-tA-WNT">
                                 <rect key="frame" x="0.0" y="22" width="703" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -238,16 +238,16 @@
                             <outlet property="delegate" destination="dFc-b6-Wpi" id="awV-mZ-soG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ZEc-AR-z3i"/>
+                    <navigationItem key="navigationItem" title="Table of contents" id="ZEc-AR-z3i"/>
                     <connections>
                         <outlet property="view" destination="tN6-AG-xaa" id="cjh-PQ-dSw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QhM-fq-Jy4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3804" y="540"/>
+            <point key="canvasLocation" x="3260" y="600"/>
         </scene>
-        <!--Asz Classes View Controller-->
+        <!--Asz Classes View Controller - Clesses-->
         <scene sceneID="4He-Mn-BQp">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="8Ww-Ox-dBY" customClass="aszClassesViewController" sceneMemberID="viewController">
@@ -277,7 +277,7 @@
                             <outlet property="delegate" destination="8Ww-Ox-dBY" id="OMK-zj-iIc"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="DV4-12-Nz9"/>
+                    <navigationItem key="navigationItem" title="Clesses" id="DV4-12-Nz9"/>
                     <connections>
                         <outlet property="view" destination="oeg-Mi-8zk" id="sHK-6j-F6F"/>
                         <segue destination="8QB-rS-iJ3" kind="push" identifier="coursemaster" splitViewControllerTargetIndex="0" id="HW5-xc-adf"/>
@@ -286,7 +286,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SeE-Zc-kxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2606" y="548"/>
+            <point key="canvasLocation" x="2190" y="600"/>
         </scene>
         <!--Table View Controller - Root View Controller-->
         <scene sceneID="0MI-1m-1Ua">
@@ -317,7 +317,7 @@
                     <navigationItem key="navigationItem" title="Root View Controller" id="sZv-k9-ffl"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-107" y="-724"/>
+            <point key="canvasLocation" x="-1131" y="-388"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4WT-t4-g9w">
@@ -332,7 +332,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ikn-5u-Wbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-731" y="-732"/>
+            <point key="canvasLocation" x="-1771" y="-388"/>
         </scene>
         <!--Asz Split View Controller-->
         <scene sceneID="8yt-nT-eC7">
@@ -365,7 +365,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKL-cn-oFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="453" y="548"/>
+            <point key="canvasLocation" x="-203" y="600"/>
         </scene>
     </scenes>
     <classes>
@@ -398,6 +398,9 @@
         </class>
         <class className="aszCourseOverviewMasterViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/aszCourseOverviewMasterViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="title" candidateClass="UINavigationItem"/>
+            </relationships>
         </class>
         <class className="aszLoginViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/aszLoginViewController.h"/>

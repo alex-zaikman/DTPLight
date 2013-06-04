@@ -1,4 +1,5 @@
 /*
+ {
 user:{
  
  userId:
@@ -23,6 +24,7 @@ user:{
  },....
  
  ]
+ }
  */
 
 #import "aszUserClassesData.h"

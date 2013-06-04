@@ -11,11 +11,14 @@
 
 @interface aszClassesViewController ()
 
+@property (nonatomic,strong) NSDictionary *dataToPass;
 @end
 
 @implementation aszClassesViewController
 
 @synthesize data=_data;
+@synthesize dataToPass=_dataToPass;
+
 
 -(void)viewDidLoad{
     [self.collectionView registerClass:[aszClassesViewCell class] forCellWithReuseIdentifier:@"cell"];
@@ -74,42 +77,42 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//    UICollectionViewCell *currentCell = [collectionView cellForItemAtIndexPath:indexPath];
-//    
-//    self.cvm = [[CourseViewModel alloc]init];
-//    
-//    NSDictionary * usr= [self.data valueForKey:@"user"];
-//    
-//    
-//    NSNumber *cid = [[NSNumber alloc] initWithInt: currentCell.tag];
-//    NSNumber *uid =[usr valueForKey:@"userId" ];
-//    NSString *dom = [[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"];
-//    
-//    
-//    
-//    
-//    
-//    [self.cvm getDataQueryDomain:dom
-//                    curentUserId:uid
-//                      forClassId:cid
-//                   OnSuccessCall:
-//     ^(NSDictionary *dic ){
-//         if(dic == nil)
-//             [self performSegueWithIdentifier:@"nocourse" sender:self];
-//         else{
-//             self.dataToPass = dic;
-//             [self performSegueWithIdentifier:@"courseDetail" sender:self];
-//             [self performSegueWithIdentifier:@"courseMaster" sender:self];
-//         }
-//     }
-//                   onFailureCall:
-//     ^(NSError *e){
-//         self.errMsg = e;
-//         [self performSegueWithIdentifier:@"error" sender:self];
-//     }
-//     ];
-//    
-//    // TODO: Select Item
+    UICollectionViewCell *currentCell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    self.cvm = [[CourseViewModel alloc]init];
+    
+    NSDictionary * usr= [self.data valueForKey:@"user"];
+    
+    
+    NSNumber *cid = [[NSNumber alloc] initWithInt: currentCell.tag];
+    NSNumber *uid =[usr valueForKey:@"userId" ];
+    NSString *dom = [[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"];
+    
+    
+    
+    
+    
+    [self.cvm getDataQueryDomain:dom
+                    curentUserId:uid
+                      forClassId:cid
+                   OnSuccessCall:
+     ^(NSDictionary *dic ){
+         if(dic == nil)
+             [self performSegueWithIdentifier:@"nocourse" sender:self];
+         else{
+             self.dataToPass = dic;
+             [self performSegueWithIdentifier:@"courseDetail" sender:self];
+             [self performSegueWithIdentifier:@"courseMaster" sender:self];
+         }
+     }
+                   onFailureCall:
+     ^(NSError *e){
+         self.errMsg = e;
+         [self performSegueWithIdentifier:@"error" sender:self];
+     }
+     ];
+    
+
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

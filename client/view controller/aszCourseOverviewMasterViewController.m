@@ -10,9 +10,15 @@
 
 @interface aszCourseOverviewMasterViewController ()
 
+
+
 @end
 
 @implementation aszCourseOverviewMasterViewController
+
+@synthesize data=_data;
+
+
 
 -(void)showMe{
     //marker func
@@ -31,6 +37,7 @@
 {
     [super viewDidLoad];
 
+    [self setTitle:@"Table of contents"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  

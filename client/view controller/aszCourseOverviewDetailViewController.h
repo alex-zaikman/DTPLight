@@ -10,4 +10,6 @@
 
 @interface aszCourseOverviewDetailViewController : UITableViewController
 
+@property (nonatomic,strong) NSDictionary *data;
+
 @end

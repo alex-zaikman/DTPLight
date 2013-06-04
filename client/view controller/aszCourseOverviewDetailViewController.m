@@ -14,6 +14,8 @@
 
 @implementation aszCourseOverviewDetailViewController
 
+@synthesize data=_data;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
