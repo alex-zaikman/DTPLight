@@ -127,7 +127,8 @@
             [str appendString:@"\n"];
             [str appendString:@"you are now logged in \n"];
             
-            self.debug.text =str;            [self.progrees stopAnimating];
+            self.debug.text =str;
+            [self.progrees stopAnimating];
             self.loggedin=YES;
             [self viewNeedsUpdate];
             

@@ -46,7 +46,7 @@
 #import "aszCourseContentData.h"
 #import "aszUserData.h"
 #import "LmsConnectionRestApi.h"
-
+#import "aszJsonDictionarryManip.h"
 
 @interface aszCourseContentData()
 
@@ -87,8 +87,9 @@
         [LmsConnectionRestApi lmsAssociateCourseToUserFrom:domain toUserId:userId OnSuccessCall:^(NSArray *arr) {
      
             NSString *courseId=@"nil";
-            
+                        
             for(NSDictionary *dic in arr){
+               
                 //if found get the courseId and breack
                 if([((NSNumber*)[dic valueForKey:@"studyClassId"])isEqualToNumber:[NSNumber numberWithInteger:self.cid]])
                 {
@@ -105,6 +106,7 @@
 
                  [LmsConnectionRestApi lmsCourseDataFrom:domain withId:courseId OnSuccessCall:^(NSDictionary * json) {
 
+                  
                      NSDictionary *data = [json valueForKey:@"data"];
                       //get book data
                      NSString *bookoverview = [data valueForKey:@"overview"];
@@ -120,7 +122,8 @@
                              NSMutableString *bookcoverurl=[[NSMutableString alloc]init];
                              [bookcoverurl appendString:domain];
                              [bookcoverurl appendString:@"/cms/courses/"];
-                             [bookcoverurl appendString: [data valueForKey:@"courseId"]];
+                             [bookcoverurl appendString: [data valueForKey:@"cid"]];
+                             [bookcoverurl appendString:@"/"];
                              [bookcoverurl appendString:bookcover];
                              
                              bookcover = bookcoverurl;
@@ -149,13 +152,21 @@
                      [course setValue:[toc valueForKey:@"overview"] forKey:@"overview"];
                      
                      // extract tocitems and lessons
-                 //    tocItems
                      
-                 //    lessons
+                     NSDictionary *tocitems = [[self class]extractTocsFrom:toc];
                      
+                     if(tocitems){
+                         if([tocitems valueForKey:@"tocItems"])
+                             [course setValue:[tocitems valueForKey:@"tocItems"] forKey:@"tocItems"];
+                         
+                         if([tocitems valueForKey:@"lessons"] )
+                             [course setValue:[tocitems valueForKey:@"lessons"] forKey:@"lessons"];
+                     }
                      
                      //add course to ret data
                       [self.retData setValue:[course copy]  forKey:@"toc"];
+                     
+                     fnsuccess(self.retData);
                      
                  } onFailureCall:fnfaliure];
             }
@@ -173,8 +184,8 @@
     NSArray *lessonsArr;
     
     if((lessonsArr = [dic valueForKey:@"lessons"])!=nil){
+        NSMutableDictionary *newLesson=[[NSMutableDictionary alloc]init];
         for (NSDictionary * lesson in lessonsArr){
-             NSMutableDictionary *newLesson=[[NSMutableDictionary alloc]init];
             [newLesson setValue:[lesson valueForKey:@"title"] forKey:@"title"];
             [newLesson setValue:[lesson valueForKey:@"cid"] forKey:@"cid"];
             [newLessonArray addObject:[newLesson copy]];
@@ -182,11 +193,35 @@
         [retDic setValue:newLessonArray forKey:@"lessons"];
     }
     
-    NSDictionary *tocDic;
-    if(([dic valueForKey:@"tocItems"])!=nil){
+    NSArray *tocArray;
+    NSMutableArray *newTocArray=[[NSMutableArray alloc]init];
+    if((tocArray = [dic valueForKey:@"tocItems"])!=nil){
     
-        [retDic setVlaue:[[self class] extractTocsFrom:tocDic] forKey:@"tocItems"];
+        for (NSDictionary * toc in tocArray){
+            
+         NSMutableDictionary *newTocDic=[[NSMutableDictionary alloc]init];
+            
+        [newTocDic setValue:[toc valueForKey:@"overview"]forKey:@"overview"];
+                     
+        [newTocDic setValue:[toc valueForKey:@"title"]  forKey:@"title"];
         
+        [newTocDic setValue:[toc valueForKey:@"cid"]  forKey:@"cid"];
+        
+        NSDictionary *innetTocs = [[self class] extractTocsFrom:toc];
+
+        if(innetTocs){
+            if([innetTocs valueForKey:@"tocItems"])
+                [newTocDic setValue:[[innetTocs valueForKey:@"tocItems"]copy] forKey:@"tocItems"];
+            
+            if([innetTocs valueForKey:@"lessons"] )
+                [newTocDic setValue:[[innetTocs valueForKey:@"lessons"]copy] forKey:@"lessons"];
+        }
+            
+        [newTocArray addObject:[newTocDic copy]];
+            
+        }
+        [retDic setValue:newTocArray forKey:@"tocItems"];
+
     }
     
     

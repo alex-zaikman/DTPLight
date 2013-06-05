@@ -7,63 +7,79 @@
 //
 
 #import "aszCourseOverviewDetailViewController.h"
+#import "aszJsonDictionarryManip.h"
+@interface aszCourseOverviewDetailViewController () 
 
-@interface aszCourseOverviewDetailViewController ()
++(NSArray*) prepareTocToPopulate:(NSDictionary*) toc identBy:(NSNumber*) i;
+
+@property (nonatomic,strong) NSArray *tocData;
+@property (nonatomic,strong) NSMutableDictionary* dataToPass;
 
 @end
 
 @implementation aszCourseOverviewDetailViewController
 
 @synthesize data=_data;
+@synthesize tocData=_tocData;
+@synthesize dataToPass=_dataToPass;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    NSDictionary *toc=[self.data valueForKey:@"toc"];
+    
+    if(!self.tocData)
+        self.tocData = [aszCourseOverviewDetailViewController prepareTocToPopulate:toc identBy:@(1)];
+    
+    return [self.tocData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+
+    NSUInteger index =  [indexPath indexAtPosition:[indexPath length]-1];
+    
+    NSMutableString *out = [[NSMutableString alloc]init];
+    
+    int i = [[[self.tocData objectAtIndex:index] valueForKey:@"ident"] intValue];
+    
+    CGFloat f= i;
+    
+    while(i > 0 ){
+         i--;
+        [out appendString:@"        "];
+    }
+    
+    [out appendString:[[self.tocData objectAtIndex:index] valueForKey:@"title"]];
+    
+    cell.textLabel.text = out;
+
+   
+    f = cell.textLabel.font.pointSize*1.3 - f*2.5;
+   
+    int ci=10*(f+1);
+    
+    CGFloat hue = ( ci % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( ci % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( ci % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    UIColor *base = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+    
+    cell.textLabel.font =  [cell.textLabel.font fontWithSize:f];
+    
+    cell.textLabel.textColor = base;
+    
+    cell.tag = index;
     
     return cell;
 }
@@ -111,6 +127,32 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSUInteger index =  [indexPath indexAtPosition:[indexPath length]-1];
+    
+    NSDictionary *pressed = [self.tocData objectAtIndex:index];
+    
+    //if chapter show overview
+    if([[pressed valueForKey:@"innerType"] isEqualToString:@"tocItem"]){
+        
+        //segue to @"chapterOverview" with pressed valueForKey:@"overview"]
+        self.dataToPass = [[NSMutableDictionary alloc]init];
+        
+        [self.dataToPass setValue:[pressed valueForKey:@"title"]  forKey:@"title"];
+        
+        [self.dataToPass setValue:[pressed valueForKey:@"overview"]  forKey:@"overview"];
+        
+        [self performSegueWithIdentifier:@"chapterOverview" sender:self];
+        
+        
+        
+    }else{ //go into lesson
+    
+    
+    
+    }
+    
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -119,5 +161,61 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+
+
+
++(NSArray*) prepareTocToPopulate:(NSDictionary*) toc  identBy:(NSNumber*) i{
+    
+    NSMutableArray *retArr=[[NSMutableArray alloc]init];
+
+    if([toc valueForKey:@"lessons"]){
+        
+        for(NSDictionary *lesson in [toc valueForKey:@"lessons"]){
+           
+            NSMutableDictionary *mlesson = [lesson mutableCopy];
+            [mlesson setValue:i forKey:@"ident"];
+            [mlesson setValue:@"lesson" forKey:@"innerType"];
+            [retArr addObject:[mlesson copy]];
+        }
+    }
+    
+    if([toc valueForKey:@"tocItems"]){
+        for(NSDictionary *tocItem in [toc valueForKey:@"tocItems"]){
+            
+            NSMutableDictionary *mtocitem = [tocItem mutableCopy];
+            [mtocitem setValue:@"tocItem" forKey:@"innerType"];
+            [mtocitem setValue:i forKey:@"ident"];
+            [retArr addObject:[mtocitem copy]];
+            
+            [retArr addObjectsFromArray:[aszCourseOverviewDetailViewController prepareTocToPopulate:tocItem identBy:@([i intValue ]+1)]];
+            
+        }
+    }
+    
+    return [retArr copy];
+}
+
+
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+  
+
+    
+    
+    if([[segue identifier] isEqualToString:@"chapterOverview"]){
+        [segue.destinationViewController performSelector:@selector(set:)
+                                              withObject:self.dataToPass];
+        
+    }
+//    else if([[segue identifier] isEqualToString:@"coursedetail"] ){
+//        [segue.destinationViewController performSelector:@selector(setData:)
+//                                              withObject:self.dataToPass];
+//        
+//    }
+}
+
+
 
 @end

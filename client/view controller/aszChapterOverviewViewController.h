@@ -10,4 +10,6 @@
 
 @interface aszChapterOverviewViewController : UIViewController
 
+-(void) set:(NSDictionary*)args;
+
 @end

@@ -10,9 +10,17 @@
 
 @interface aszChapterOverviewViewController ()
 
+
+@property (weak, nonatomic) IBOutlet UITextView *blabla;
+@property (nonatomic,strong) NSString *overview;
+
 @end
 
 @implementation aszChapterOverviewViewController
+
+@synthesize blabla=_blabla;
+@synthesize overview=_overview;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +35,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.blabla.text = self.overview;
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +44,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) set:(NSDictionary*)args{
+    
+    [self setTitle:(NSString*)[args valueForKey:@"title"]];
+    self.overview = [args valueForKey:@"overview"];
+
+ //   self.ovtext.text = ov;
+    [self.view setNeedsDisplay];
+    
+}
 @end

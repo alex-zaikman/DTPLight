@@ -9,6 +9,7 @@
 
 #import "LmsConnectionRestApi.h"
 #import "aszHttpConnectionHandler.h"
+#import "aszJsonDictionarryManip.h"
 
 @interface LmsConnectionRestApi()
 
@@ -107,7 +108,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -135,7 +136,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -159,7 +160,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -182,7 +183,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -207,7 +208,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -236,7 +237,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -264,7 +265,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -293,7 +294,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -319,7 +320,9 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+     
+        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        
         if(error)
             faliure(error);
         else
@@ -349,7 +352,7 @@
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
         NSError *error;
-        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSArray *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else
@@ -375,8 +378,9 @@
     
     [hndl execRequest:req OnSuccessCall:^(NSData* data){
         
+        
         NSError *error;
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error)
             faliure(error);
         else

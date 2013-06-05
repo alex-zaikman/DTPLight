@@ -8,6 +8,8 @@
 
 #import "aszClassesViewController.h"
 #import "aszClassesViewCell.h"
+#import "aszCourseContentData.h"
+
 
 @interface aszClassesViewController ()
 
@@ -79,57 +81,40 @@
     
     UICollectionViewCell *currentCell = [collectionView cellForItemAtIndexPath:indexPath];
     
-    self.cvm = [[CourseViewModel alloc]init];
-    
-    NSDictionary * usr= [self.data valueForKey:@"user"];
-    
-    
+
     NSNumber *cid = [[NSNumber alloc] initWithInt: currentCell.tag];
-    NSNumber *uid =[usr valueForKey:@"userId" ];
-    NSString *dom = [[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"];
     
+
+    aszCourseContentData* cd = [[aszCourseContentData alloc]init];
     
+     NSString *domain = [[NSUserDefaults standardUserDefaults] stringForKey:@"domain_preference"];
     
+    [cd getDataQueryDomain:domain forClassId:[cid integerValue] OnSuccessCall:^(NSDictionary * ddata) {
+
+        self.dataToPass=ddata;
+       //  [self performSegueWithIdentifier:@"coursemaster" sender:self];
+         [self performSegueWithIdentifier:@"coursedetail" sender:self];
+        
+    } onFailureCall:^(NSError *e) {
     
+    }];
     
-    [self.cvm getDataQueryDomain:dom
-                    curentUserId:uid
-                      forClassId:cid
-                   OnSuccessCall:
-     ^(NSDictionary *dic ){
-         if(dic == nil)
-             [self performSegueWithIdentifier:@"nocourse" sender:self];
-         else{
-             self.dataToPass = dic;
-             [self performSegueWithIdentifier:@"courseDetail" sender:self];
-             [self performSegueWithIdentifier:@"courseMaster" sender:self];
-         }
-     }
-                   onFailureCall:
-     ^(NSError *e){
-         self.errMsg = e;
-         [self performSegueWithIdentifier:@"error" sender:self];
-     }
-     ];
     
 
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-//    if([[segue identifier] isEqualToString:@"error"]){
-//        [segue.destinationViewController performSelector:@selector(errorMsgToDisplay:)
-//                                              withObject:self.errMsg];
-//        
-//    }else if([[segue identifier] isEqualToString:@"courseDetail"] ){
+//    if([[segue identifier] isEqualToString:@"coursemaster"]){
 //        [segue.destinationViewController performSelector:@selector(setData:)
 //                                              withObject:self.dataToPass];
 //        
-//    }else if( [[segue identifier] isEqualToString:@"courseMaster"] ){
-//        [segue.destinationViewController performSelector:@selector(setData:)
-//                                              withObject:self.dataToPass];
-//        
-//    }
+//    }else
+        if([[segue identifier] isEqualToString:@"coursedetail"] ){
+        [segue.destinationViewController performSelector:@selector(setData:)
+                                              withObject:self.dataToPass];
+        
+    }
 }
 
 @end
