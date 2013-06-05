@@ -144,6 +144,7 @@
                         <outlet property="userName" destination="NMx-EV-43G" id="RR8-VI-E0I"/>
                         <outlet property="view" destination="lqh-MI-2pr" id="WAL-GF-z2t"/>
                         <segue destination="8Ww-Ox-dBY" kind="push" identifier="classes" id="Mr2-Xy-IMZ"/>
+                        <segue destination="pUu-cv-6mH" kind="push" identifier="test" splitViewControllerTargetIndex="0" id="Mfu-OQ-VlQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hr-1q-o22" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -267,51 +268,86 @@
             </objects>
             <point key="canvasLocation" x="2190" y="600"/>
         </scene>
-        <!--Table View Controller - Root View Controller-->
-        <scene sceneID="0MI-1m-1Ua">
+        <!--View Controller-->
+        <scene sceneID="pJd-lL-DBP">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="pZm-LD-5xe" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="asas" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wcT-d2-Nz1">
+                <viewController id="di5-Pc-KnB" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iiI-hf-83M">
                         <rect key="frame" x="0.0" y="64" width="320" height="704"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="qa1-rB-bxA">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="148" id="yhe-Hu-rcx"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qa1-rB-bxA" firstAttribute="leading" secondItem="iiI-hf-83M" secondAttribute="leading" type="default" id="MKU-Up-OyG"/>
+                            <constraint firstItem="qa1-rB-bxA" firstAttribute="top" secondItem="iiI-hf-83M" secondAttribute="top" type="default" id="kmO-Mg-56e"/>
+                            <constraint firstItem="qa1-rB-bxA" firstAttribute="trailing" secondItem="iiI-hf-83M" secondAttribute="trailing" type="default" id="qvK-tD-HTu"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="FOy-0M-OGX">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="pZm-LD-5xe" id="ZsS-07-uJp"/>
-                            <outlet property="delegate" destination="pZm-LD-5xe" id="Pzr-ph-hf2"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="sZv-k9-ffl"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I86-Jz-RDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="TuM-sd-XHD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Beh-L6-Ixg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1131" y="-388"/>
+            <point key="canvasLocation" x="-719" y="-1050"/>
+        </scene>
+        <!--Asz Test View Controller-->
+        <scene sceneID="hoz-3a-epV">
+            <objects>
+                <viewController id="pUu-cv-6mH" customClass="aszTestViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UPF-bA-SPk">
+                        <rect key="frame" x="0.0" y="64" width="320" height="704"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nh2-xh-SKd">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="pUu-cv-6mH" eventType="touchUpInside" id="Juq-np-jOZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nh2-xh-SKd" firstAttribute="top" secondItem="UPF-bA-SPk" secondAttribute="top" constant="324" id="O89-K2-lWD"/>
+                            <constraint firstItem="nh2-xh-SKd" firstAttribute="centerX" secondItem="UPF-bA-SPk" secondAttribute="centerX" type="default" id="kSp-HP-J5T"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="DY6-gG-eLd"/>
+                    <connections>
+                        <outlet property="view" destination="UPF-bA-SPk" id="inl-De-599"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Z7-sZ-4YF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1909" y="-1065"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4WT-t4-g9w">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ikn-5u-Wbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="lWG-9W-0xL" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PGn-8U-JKy">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="pZm-LD-5xe" kind="relationship" relationship="rootViewController" id="llI-aL-zeQ"/>
+                        <segue destination="di5-Pc-KnB" kind="relationship" relationship="rootViewController" id="5s7-Je-nlx"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ikn-5u-Wbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1771" y="-388"/>
+            <point key="canvasLocation" x="-1447" y="-924"/>
         </scene>
         <!--Asz Split View Controller-->
         <scene sceneID="8yt-nT-eC7">
@@ -347,6 +383,9 @@
             <point key="canvasLocation" x="-203" y="600"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo.jpg" width="161" height="83"/>
+    </resources>
     <classes>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
@@ -397,6 +436,9 @@
         </class>
         <class className="aszSplitViewController" superclassName="UISplitViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSplitViewController.h"/>
+        </class>
+        <class className="aszTestViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszTestViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
