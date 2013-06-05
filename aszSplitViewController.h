@@ -8,5 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
+@interface aszSplitViewController : UISplitViewController
 
 @end
