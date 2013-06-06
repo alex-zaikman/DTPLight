@@ -18,14 +18,16 @@
 
 - (IBAction)back:(id)sender {
     
-    UIViewController* vc = [self.splitViewController.viewControllers objectAtIndex:1];
+    
+    UIViewController* vc = [self.splitViewController.viewControllers lastObject];
     
     
     [vc.navigationController popToRootViewControllerAnimated:YES];
     
-   // [self.navigationController popViewControllerAnimated:YES];
+    //[vc.navigationController popViewControllerAnimated:YES];
+   // [[self.splitViewController.viewControllers objectAtIndex:0] popViewControllerAnimated:YES];
 
-     //[popViewControllerAnimated:YES];
+     // [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -48,10 +50,6 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 @end

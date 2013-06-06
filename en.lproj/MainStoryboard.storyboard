@@ -144,7 +144,6 @@
                         <outlet property="userName" destination="NMx-EV-43G" id="RR8-VI-E0I"/>
                         <outlet property="view" destination="lqh-MI-2pr" id="WAL-GF-z2t"/>
                         <segue destination="8Ww-Ox-dBY" kind="push" identifier="classes" id="Mr2-Xy-IMZ"/>
-                        <segue destination="pUu-cv-6mH" kind="push" identifier="test" splitViewControllerTargetIndex="0" id="Mfu-OQ-VlQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hr-1q-o22" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -184,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yd7-Fj-VZC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4252" y="70"/>
+            <point key="canvasLocation" x="3252" y="1614"/>
         </scene>
         <!--Asz Course Overview Detail View Controller - Table of contents-->
         <scene sceneID="Ghk-EG-did">
@@ -294,45 +293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Beh-L6-Ixg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="-1050"/>
-        </scene>
-        <!--Asz Test View Controller-->
-        <scene sceneID="hoz-3a-epV">
-            <objects>
-                <viewController id="pUu-cv-6mH" customClass="aszTestViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="UPF-bA-SPk">
-                        <rect key="frame" x="0.0" y="64" width="320" height="704"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nh2-xh-SKd">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="back:" destination="pUu-cv-6mH" eventType="touchUpInside" id="Juq-np-jOZ"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="nh2-xh-SKd" firstAttribute="top" secondItem="UPF-bA-SPk" secondAttribute="top" constant="324" id="O89-K2-lWD"/>
-                            <constraint firstItem="nh2-xh-SKd" firstAttribute="centerX" secondItem="UPF-bA-SPk" secondAttribute="centerX" type="default" id="kSp-HP-J5T"/>
-                        </constraints>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="DY6-gG-eLd"/>
-                    <connections>
-                        <outlet property="view" destination="UPF-bA-SPk" id="inl-De-599"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5Z7-sZ-4YF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1909" y="-1065"/>
+            <point key="canvasLocation" x="889" y="-882"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4WT-t4-g9w">
@@ -347,7 +308,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-1447" y="-924"/>
+            <point key="canvasLocation" x="-215" y="-892"/>
         </scene>
         <!--Asz Split View Controller-->
         <scene sceneID="8yt-nT-eC7">
@@ -402,9 +363,6 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
         <class className="aszChapterOverviewViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/aszChapterOverviewViewController.h"/>
             <relationships>
@@ -436,9 +394,6 @@
         </class>
         <class className="aszSplitViewController" superclassName="UISplitViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSplitViewController.h"/>
-        </class>
-        <class className="aszTestViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszTestViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

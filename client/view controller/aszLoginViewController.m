@@ -92,7 +92,6 @@
         self.dataToPass=data;
         
         [self performSegueWithIdentifier:@"classes" sender:self];
-        [self performSegueWithIdentifier:@"test" sender:self];
         
            } onFailureCall:^(NSError *e) {
         self.debug.text = [e localizedDescription];
