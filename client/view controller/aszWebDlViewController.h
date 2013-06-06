@@ -12,4 +12,6 @@
 
 @property (nonatomic,strong) NSDictionary *data;
 
+@property (weak, nonatomic) IBOutlet UIWebView *dlWebView;
+
 @end

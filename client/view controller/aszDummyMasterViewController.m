@@ -14,6 +14,16 @@
 
 @implementation aszDummyMasterViewController
 
+- (id) initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self.navigationItem setHidesBackButton:YES];
+        
+    }
+    return self;
+    
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

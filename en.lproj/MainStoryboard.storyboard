@@ -299,6 +299,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dlWebView" destination="GWu-yx-Ktq" id="8eU-Bl-GEN"/>
                         <outlet property="view" destination="yUm-IX-K86" id="d6k-zq-yma"/>
                         <segue destination="di5-Pc-KnB" kind="push" identifier="dummyMaster" splitViewControllerTargetIndex="0" id="QiL-au-Jc7"/>
                     </connections>
@@ -487,6 +488,9 @@
         </class>
         <class className="aszWebDlViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/aszWebDlViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dlWebView" candidateClass="UIWebView"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

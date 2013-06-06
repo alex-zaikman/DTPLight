@@ -8,10 +8,16 @@
 
 #import "aszSeqsTableViewController.h"
 #import "aszSeqsTableCell.h"
+#import "aszHttpConnectionHandler.h"
 #import "aszJsonDictionarryManip.h"
+#import "aszWebDlViewController.h"
+
 @interface aszSeqsTableViewController ()
 
 @property (nonatomic,strong) NSArray *los;
+
+@property (nonatomic,strong) NSMutableArray *dlDataUrl;
+@property (nonatomic,assign) int dlcount;
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
@@ -23,16 +29,24 @@
 @synthesize data=_data;
 @synthesize webdl=_webdl;
 @synthesize los=_los;
+@synthesize dlDataUrl=_dlDataUrl;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    
+    self = [super initWithCoder:aDecoder];
     if (self) {
+        
         [self.navigationItem setHidesBackButton:YES];
+        
         
     }
     return self;
 }
+
+
+
+
 
 - (void)viewDidLoad
 {
@@ -40,8 +54,9 @@
     
    // [self.tableView registerClass:[ aszSeqsTableCell class] forCellReuseIdentifier:@"cell"];
 
+    self.dlDataUrl = [[NSMutableArray alloc]init];
     self.los = [self.data valueForKey:@"learningObjects"];
-
+    self.dlcount=0;
 }
 
 
@@ -85,28 +100,25 @@
     cell.imageView.image =     [ [self class]  imageWithImage:[UIImage imageWithData:bgImageData] scaledToSize:CGSizeMake(300,200)] ;
     
     
+    NSString *jsonUrl = [seq valueForKey:@"contentUrl"];
     
+    aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
     
+    NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
     
-    //
-    //learningObjects: [
-    //                  {
-    //                  cid:
-    //                  title:   //optional
-    //
-    //                  sequences: [
-    //                              {
-    //                              cid:
-    //                              title:
-    //                              contentUrl:
-    //                              thumbnailUrl:
-    //
-    //                              },...]
-    //
-    //
-    //                  },...]
-    //
-    //
+    [connection execRequest:request OnSuccessCall:^(NSData *data) {
+    
+        
+        [self.dlDataUrl addObject:data];
+        
+        
+    } onFailureCall:^(NSError *e) {
+        //wish i could help
+    }];
+    
+    cell.tag = self.dlcount;
+    
+    self.dlcount++;
     
     return cell;
 }
@@ -117,22 +129,38 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    
+#warning todo
+    
+    static NSString *CellIdentifier = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    
+    NSData *jsonData =[self.dlDataUrl objectAtIndex:cell.tag];
+
+    NSString *jsonDataString = [[NSString alloc] initWithData:jsonData
+                                                                        encoding:NSUTF8StringEncoding];
+    
+    aszWebDlViewController *wdl =(aszWebDlViewController *)self.webdl;
+    
+
+    NSString *urlAddress = @"https://cto.timetoknow.com/cms/player/dl/index2.jsp";
+    
+    jsonDataString = [@"q=" stringByAppendingString:jsonDataString];
+    
+    NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"POST" withUrlParams:nil andBodyData:jsonDataString];
+    
+    
+    //Load the request in the UIWebView.
+    [wdl.dlWebView  loadRequest:request];
+    
+    
 }
+
+
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:
 (NSInteger)section{
-  
-    
-  //  NSString *ff = [aszJsonDictionarryManip dictionarryToPrintableString:[self.los objectAtIndex:section]];
-
-    
     
     NSString *headerTitle;
     

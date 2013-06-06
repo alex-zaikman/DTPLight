@@ -17,6 +17,7 @@
 @implementation aszWebDlViewController
 
 @synthesize data=_data;
+@synthesize dlWebView=_dlWebView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,19 +35,13 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 - (IBAction)goToClasses:(id)sender {
 
-    
-    
     [self performSegueWithIdentifier:@"dummyMaster" sender:self];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
