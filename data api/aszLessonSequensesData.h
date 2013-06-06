@@ -10,4 +10,7 @@
 
 @interface aszLessonSequensesData : NSObject
 
+
+-(void)getDataQueryDomain:(NSString*)domain withClassId:(NSString*)classid withCourseId:(NSString*)courseid andLessonId:(NSString*)lessonid andLessonTitle:(NSString*)loTitle OnSuccessCall:(void (^)(NSDictionary *)) success onFailureCall:(void (^)(NSError*)) faliure;
+
 @end

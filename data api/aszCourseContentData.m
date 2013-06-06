@@ -12,10 +12,14 @@
     logOut:   //url
  }
  
+ classId:
+ 
  book:{
    bookOverview:
    bookCredits:
    bookImageUrl:  //optional
+   courseCid:
+   courseId:
  }
  
  toc:{
@@ -94,6 +98,7 @@
                 if([((NSNumber*)[dic valueForKey:@"studyClassId"])isEqualToNumber:[NSNumber numberWithInteger:self.cid]])
                 {
                     courseId = [dic valueForKey:@"courseId"];
+                    
                     break;
                 }
             }
@@ -111,6 +116,9 @@
                       //get book data
                      NSString *bookoverview = [data valueForKey:@"overview"];
                      NSString *bookcredits = [data valueForKey:@"credits"];
+                     
+                     
+                      NSString *courseCid = [data valueForKey:@"cid"];
                      
                      NSString *bookcover = [data valueForKey:@"coverRefId"];
                      
@@ -137,6 +145,8 @@
                      
                      [book setValue:bookoverview forKey:@"bookOverview"];
                      [book setValue:bookcredits forKey:@"bookCredits"];
+                     [book setValue:courseCid forKey:@"courseCid"];
+                     [book setValue:courseId forKey:@"courseId"];
                      
                      if(bookcover!=nil)
                           [book setValue:bookcover forKey:@"bookImageUrl"];
@@ -165,7 +175,7 @@
                      
                      //add course to ret data
                       [self.retData setValue:[course copy]  forKey:@"toc"];
-                     
+                     [self.retData setValue:[NSString stringWithFormat:@"%d",self.cid] forKey:@"classId"];
                      fnsuccess(self.retData);
                      
                  } onFailureCall:fnfaliure];

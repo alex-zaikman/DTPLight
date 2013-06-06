@@ -7,18 +7,29 @@
 //
 
 #import "aszSeqsTableViewController.h"
-
+#import "aszSeqsTableCell.h"
+#import "aszJsonDictionarryManip.h"
 @interface aszSeqsTableViewController ()
+
+@property (nonatomic,strong) NSArray *los;
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
+
 
 @end
 
 @implementation aszSeqsTableViewController
 
+@synthesize data=_data;
+@synthesize webdl=_webdl;
+@synthesize los=_los;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self.navigationItem setHidesBackButton:YES];
+        
     }
     return self;
 }
@@ -26,84 +37,81 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+   // [self.tableView registerClass:[ aszSeqsTableCell class] forCellReuseIdentifier:@"cell"];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.los = [self.data valueForKey:@"learningObjects"];
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
+
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return [self.los count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+
+    return [[[self.los objectAtIndex:section] valueForKey:@"sequences"]count];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    NSArray *seqs = [[self.los objectAtIndex:indexPath.section] valueForKey:@"sequences"];
+    int row = [indexPath indexAtPosition:[indexPath length]-1 ];
+    NSDictionary *seq = [seqs objectAtIndex:row];
+    
+    
+    
+    
+    cell.textLabel.text= [seq valueForKey:@"title"];
+    
+    cell.textLabel.contentMode = UIViewContentModeScaleAspectFit;
+    
+    
+    NSString *url = [seq valueForKey:@"thumbnailUrl"];
+    NSURL *bgImageURL = [NSURL URLWithString:url];
+    NSData *bgImageData = [NSData dataWithContentsOfURL:bgImageURL];
+    
+    cell.imageView.image =     [ [self class]  imageWithImage:[UIImage imageWithData:bgImageData] scaledToSize:CGSizeMake(300,200)] ;
+    
+    
+    
+    
+    
+    //
+    //learningObjects: [
+    //                  {
+    //                  cid:
+    //                  title:   //optional
+    //
+    //                  sequences: [
+    //                              {
+    //                              cid:
+    //                              title:
+    //                              contentUrl:
+    //                              thumbnailUrl:
+    //
+    //                              },...]
+    //
+    //
+    //                  },...]
+    //
+    //
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -118,4 +126,49 @@
      */
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:
+(NSInteger)section{
+  
+    
+  //  NSString *ff = [aszJsonDictionarryManip dictionarryToPrintableString:[self.los objectAtIndex:section]];
+
+    
+    
+    NSString *headerTitle;
+    
+    headerTitle = (NSString*)[[self.los objectAtIndex:section]  valueForKey:@"title"];
+    if(!headerTitle)
+       headerTitle =@"lo";
+    
+    return headerTitle;
+}
+
+
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        if ([[UIScreen mainScreen] scale] == 2.0) {
+            UIGraphicsBeginImageContextWithOptions(newSize, YES, 2.0);
+        } else {
+            UIGraphicsBeginImageContext(newSize);
+        }
+    } else {
+        UIGraphicsBeginImageContext(newSize);
+    }
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+
+
+
 @end
+
+
+
+
+
+
+

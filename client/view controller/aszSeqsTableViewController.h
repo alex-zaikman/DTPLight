@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface aszSeqsTableViewController : UITableViewController
+@interface aszSeqsTableViewController : UITableViewController 
+
+@property (nonatomic,strong) NSDictionary *data;
+
+@property (nonatomic,weak) UIViewController *webdl;
 
 @end

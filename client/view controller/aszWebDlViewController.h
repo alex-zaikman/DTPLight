@@ -10,4 +10,6 @@
 
 @interface aszWebDlViewController : UIViewController
 
+@property (nonatomic,strong) NSDictionary *data;
+
 @end

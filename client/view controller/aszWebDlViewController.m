@@ -10,15 +10,20 @@
 
 @interface aszWebDlViewController ()
 
+
+
 @end
 
 @implementation aszWebDlViewController
+
+@synthesize data=_data;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+       [self.navigationItem setHidesBackButton:YES];
     }
     return self;
 }
@@ -33,6 +38,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)goToClasses:(id)sender {
+
+    
+    
+    [self performSegueWithIdentifier:@"dummyMaster" sender:self];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
