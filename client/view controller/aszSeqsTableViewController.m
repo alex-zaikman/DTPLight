@@ -130,8 +130,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-#warning todo
-    
     static NSString *CellIdentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -145,9 +143,22 @@
     
 
     NSString *urlAddress = @"https://cto.timetoknow.com/cms/player/dl/index2.jsp";
+   
+    NSMutableString *mediaUrl=[[NSMutableString alloc]init];
     
-    jsonDataString = [@"q=" stringByAppendingString:jsonDataString];
+    [mediaUrl appendString: @" &mediaUrl= \"/cms/courses/"];
     
+    NSString *courseId = [[self.data valueForKey:@"book"] valueForKey:@"courseCid"];
+    
+     [mediaUrl appendString: courseId];
+     [mediaUrl appendString: @"/\""];
+    
+    jsonDataString = [@"jsonStr=" stringByAppendingString:jsonDataString];
+     
+     jsonDataString =[jsonDataString stringByAppendingString:mediaUrl];
+   
+    jsonDataString = [jsonDataString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      
     NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"POST" withUrlParams:nil andBodyData:jsonDataString];
     
     
