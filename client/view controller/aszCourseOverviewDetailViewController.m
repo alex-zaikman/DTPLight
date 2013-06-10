@@ -18,6 +18,8 @@
 @property (nonatomic,strong) NSArray *tocData;
 @property (nonatomic,strong) NSDictionary* dataToPass;
 @property (nonatomic,weak) UIViewController *webdl;
+@property (nonatomic,strong) NSMutableArray *cells;
+
 
 @end
 
@@ -27,6 +29,8 @@
 @synthesize tocData=_tocData;
 @synthesize dataToPass=_dataToPass;
 @synthesize webdl=_webdl;
+@synthesize cells=_cells;
+
 
 #pragma mark - Table view data source
 
@@ -48,12 +52,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!self.cells)
+        self.cells=[[NSMutableArray alloc]init];
+
+    NSUInteger index =  [indexPath indexAtPosition:[indexPath length]-1];
+   
+    if(([self.cells count])<=index){
+    
     static NSString *CellIdentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
 
-    NSUInteger index =  [indexPath indexAtPosition:[indexPath length]-1];
-    
     NSMutableString *out = [[NSMutableString alloc]init];
     
     int i = [[[self.tocData objectAtIndex:index] valueForKey:@"ident"] intValue];
@@ -85,7 +94,18 @@
     
     cell.tag = index;
     
+    [self.cells addObject:cell];
+        
     return cell;
+    
+    
+}
+    else{
+    
+        return  [self.cells objectAtIndex:index];
+    }
+    
+    
 }
 
 #pragma mark - Table view delegate

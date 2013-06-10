@@ -12,7 +12,7 @@
 #import "aszJsonDictionarryManip.h"
 #import "aszWebDlViewController.h"
 
-@interface aszSeqsTableViewController ()
+@interface aszSeqsTableViewController () 
 
 @property (nonatomic,strong) NSArray *los;
 @property (nonatomic,strong) NSMutableDictionary *dlDataUrl;
@@ -57,7 +57,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.modalInPopover=YES;
    // [self.tableView registerClass:[ aszSeqsTableCell class] forCellReuseIdentifier:@"cell"];
 
     self.dlDataUrl = [[NSMutableDictionary alloc]init];
@@ -193,6 +193,7 @@
     
     
     //Load the request in the UIWebView.
+    wdl.dlWebView.scalesPageToFit=YES;
     [wdl.dlWebView  loadRequest:request];
     
     

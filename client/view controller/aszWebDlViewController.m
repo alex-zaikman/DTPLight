@@ -24,6 +24,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
        [self.navigationItem setHidesBackButton:YES];
     }
     return self;
@@ -39,6 +40,8 @@
 
 - (IBAction)goToClasses:(id)sender {
 
+
+    
     [self performSegueWithIdentifier:@"dummyMaster" sender:self];
     
     [self.navigationController popViewControllerAnimated:YES];

@@ -78,7 +78,7 @@
                                     <constraint firstAttribute="height" constant="206" id="xdv-up-FhZ"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="Please login.......">
+                                    <fragment content="Please log in.......">
                                         <attributes>
                                             <font key="NSFont" size="14" name="LucidaHandwriting-Italic"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>

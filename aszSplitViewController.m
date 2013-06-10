@@ -8,17 +8,24 @@
 
 #import "aszSplitViewController.h"
 
-@interface aszSplitViewController ()
+@interface aszSplitViewController ()<UISplitViewControllerDelegate>
 
 @end
 
 @implementation aszSplitViewController
 
 - (void)awakeFromNib {
+    self.delegate=self;
+    
     [super awakeFromNib];
    
 }
 
+-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+    return NO;
+    
+}
 
 
 
