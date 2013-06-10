@@ -15,14 +15,14 @@
 @interface aszSeqsTableViewController ()
 
 @property (nonatomic,strong) NSArray *los;
-@property (nonatomic,strong) NSMutableDictionary *rowsTranslate;
-@property (nonatomic,strong) NSMutableArray *dlDataUrl;
-@property (nonatomic,assign) int dlcount;
-@property (nonatomic,strong) NSNumber *rowcount;
+@property (nonatomic,strong) NSMutableDictionary *dlDataUrl;
+
+@property (nonatomic,strong) NSMutableDictionary *cells;
+
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
-@property (nonatomic,strong) NSMutableDictionary *cells;
+
 - (UITableViewCell *)cachedTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
@@ -34,8 +34,8 @@
 @synthesize webdl=_webdl;
 @synthesize los=_los;
 @synthesize dlDataUrl=_dlDataUrl;
-@synthesize rowsTranslate=_rowsTranslate;
-@synthesize rowcount=_rowcount;
+
+
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -60,11 +60,10 @@
     
    // [self.tableView registerClass:[ aszSeqsTableCell class] forCellReuseIdentifier:@"cell"];
 
-    self.dlDataUrl = [[NSMutableArray alloc]init];
+    self.dlDataUrl = [[NSMutableDictionary alloc]init];
     self.los = [self.data valueForKey:@"learningObjects"];
-    self.dlcount=0;
-    self.rowcount= [NSNumber numberWithInt:0];
-    self.rowsTranslate=[[NSMutableDictionary alloc]init];
+
+
 }
 
 
@@ -89,64 +88,55 @@
     if(!self.cells)
         self.cells = [[NSMutableDictionary alloc]init];
     
-    int row =  indexPath.row +(indexPath.section*1000);
-    
-   if(![self.rowsTranslate valueForKey:[NSString stringWithFormat:@"%d",row] ])
-    {
-        [self.rowsTranslate setValue:self.rowcount forKey:[NSString stringWithFormat:@"%d",row]];
-    
-        self.rowcount = [NSNumber numberWithInt: [self.rowcount integerValue]+1];
-    }
-
-    NSNumber *uu = [self.rowsTranslate valueForKey:[NSString stringWithFormat:@"%d",row]];
-    
-    NSString *key = [NSString stringWithFormat:@"%@", uu];
+       
+    int ikey = indexPath.section*1000 +  indexPath.row;
+    NSString *key=[NSString stringWithFormat:@"%d", ikey];
     
     if(![self.cells valueForKey:key]){
     
     
-    static NSString *CellIdentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *CellIdentifier = @"cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSArray *seqs = [[self.los objectAtIndex:indexPath.section] valueForKey:@"sequences"];
+        NSArray *seqs = [[self.los objectAtIndex:indexPath.section] valueForKey:@"sequences"];
         
-    NSDictionary *seq = [seqs objectAtIndex:indexPath.row];
+        NSDictionary *seq = [seqs objectAtIndex:indexPath.row];
     
     
     
     
-    cell.textLabel.text= [seq valueForKey:@"title"];
+        cell.textLabel.text= [seq valueForKey:@"title"];
     
-    cell.textLabel.contentMode = UIViewContentModeScaleAspectFit;
-    
-    
-    NSString *url = [seq valueForKey:@"thumbnailUrl"];
-    NSURL *bgImageURL = [NSURL URLWithString:url];
-    NSData *bgImageData = [NSData dataWithContentsOfURL:bgImageURL];
-    
-    cell.imageView.image =     [ [self class]  imageWithImage:[UIImage imageWithData:bgImageData] scaledToSize:CGSizeMake(300,200)] ;
+        cell.textLabel.contentMode = UIViewContentModeScaleAspectFit;
     
     
-    NSString *jsonUrl = [seq valueForKey:@"contentUrl"];
+        NSString *url = [seq valueForKey:@"thumbnailUrl"];
+        NSURL *bgImageURL = [NSURL URLWithString:url];
+        NSData *bgImageData = [NSData dataWithContentsOfURL:bgImageURL];
     
-    aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
+        cell.imageView.image =     [ [self class]  imageWithImage:[UIImage imageWithData:bgImageData] scaledToSize:CGSizeMake(300,200)] ;
     
-    NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
     
-    [connection execRequest:request OnSuccessCall:^(NSData *data) {
+        NSString *jsonUrl = [seq valueForKey:@"contentUrl"];
+    
+        aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
+    
+        NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
+    
+        [connection execRequest:request OnSuccessCall:^(NSData *data) {
         
         
-    [self.dlDataUrl addObject:data];
+            [self.dlDataUrl setValue:data forKey:key];
         
         
     } onFailureCall:^(NSError *e) {
         //wish i could help
     }];
     
+     
+        cell.tag = ikey;
     
-    cell.tag = self.dlcount;
-    
-    self.dlcount++;
+       //self.dlcount++;
     
     [self.cells setValue:cell  forKey:key];
         
@@ -174,7 +164,7 @@
     NSLog(@"%ld",(long)indexPath.row);
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    NSData *jsonData =[self.dlDataUrl objectAtIndex:cell.tag];
+    NSData *jsonData =[self.dlDataUrl valueForKey:[ NSString stringWithFormat:@"%d",cell.tag]];
 
     NSString *jsonDataString = [[NSString alloc] initWithData:jsonData
                                                                         encoding:NSUTF8StringEncoding];

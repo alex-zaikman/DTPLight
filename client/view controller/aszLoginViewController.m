@@ -204,7 +204,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"user_default"];
     NSString *pass = [defaults objectForKey:@"pass_default"];
-    self.userName.text = user?user:@"deva.teacher";//TODO
+    self.userName.text = user?user:@"deva.teacher";
     self.password.text = pass?pass:@"123456";
     
     [self viewNeedsUpdate];
