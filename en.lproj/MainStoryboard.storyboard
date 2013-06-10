@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="yxg-SX-P8G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="yxg-SX-P8G">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -382,7 +382,6 @@
         <!--Navigation Controller-->
         <scene sceneID="4WT-t4-g9w">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ikn-5u-Wbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="lWG-9W-0xL" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PGn-8U-JKy">
                         <autoresizingMask key="autoresizingMask"/>
@@ -391,6 +390,7 @@
                         <segue destination="di5-Pc-KnB" kind="relationship" relationship="rootViewController" id="5s7-Je-nlx"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ikn-5u-Wbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-215" y="-892"/>
         </scene>
@@ -431,68 +431,6 @@
     <resources>
         <image name="logo.jpg" width="161" height="83"/>
     </resources>
-    <classes>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="aszChapterOverviewViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszChapterOverviewViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="blabla" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="aszClassesViewCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszClassesViewCell.h"/>
-        </class>
-        <class className="aszClassesViewController" superclassName="UICollectionViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszClassesViewController.h"/>
-        </class>
-        <class className="aszCourseOverviewDetailViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszCourseOverviewDetailViewController.h"/>
-        </class>
-        <class className="aszDummyMasterViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszDummyMasterViewController.h"/>
-        </class>
-        <class className="aszLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszLoginViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="classesIB" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="debug" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="loginIB" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="logoutIB" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="progrees" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="userName" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="aszSeqsTableCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSeqsTableCell.h"/>
-        </class>
-        <class className="aszSeqsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSeqsTableViewController.h"/>
-        </class>
-        <class className="aszSplitViewController" superclassName="UISplitViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSplitViewController.h"/>
-        </class>
-        <class className="aszWebDlViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszWebDlViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dlWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
