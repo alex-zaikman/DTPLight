@@ -18,6 +18,7 @@
 @property (nonatomic,strong) NSArray *tocData;
 @property (nonatomic,strong) NSDictionary* dataToPass;
 @property (nonatomic,weak) UIViewController *webdl;
+@property (nonatomic,weak) UIViewController *master;
 @property (nonatomic,strong) NSMutableArray *cells;
 
 
@@ -30,7 +31,7 @@
 @synthesize dataToPass=_dataToPass;
 @synthesize webdl=_webdl;
 @synthesize cells=_cells;
-
+@synthesize master=_master;
 
 #pragma mark - Table view data source
 
@@ -211,16 +212,26 @@
         
     }
     else if([[segue identifier] isEqualToString:@"seqs"] ){
+        
         [segue.destinationViewController performSelector:@selector(setData:)
                                               withObject:self.dataToPass];
+        
         [segue.destinationViewController performSelector:@selector(setWebdl:)
                                               withObject:self.webdl];
+        
+     //   self.master = segue.destinationViewController;
         
     }
     else if([[segue identifier] isEqualToString:@"webdl"] ){
         [segue.destinationViewController performSelector:@selector(setData:)
                                               withObject:self.dataToPass];
+        
         self.webdl = segue.destinationViewController;
+        
+        
+      //  [segue.destinationViewController performSelector:@selector(setWebdl:)
+        //                                      withObject:self.webdl];
+        
     }
 }
 

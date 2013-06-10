@@ -193,7 +193,7 @@
     
     
     //Load the request in the UIWebView.
-    wdl.dlWebView.scalesPageToFit=YES;
+  //  wdl.dlWebView.scalesPageToFit=YES;
     [wdl.dlWebView  loadRequest:request];
     
     

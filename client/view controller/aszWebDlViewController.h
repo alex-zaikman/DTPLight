@@ -14,4 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *dlWebView;
 
+
+@property (nonatomic,weak) UIViewController *master;
+
 @end

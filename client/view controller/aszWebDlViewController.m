@@ -18,6 +18,7 @@
 
 @synthesize data=_data;
 @synthesize dlWebView=_dlWebView;
+@synthesize master=_master;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
