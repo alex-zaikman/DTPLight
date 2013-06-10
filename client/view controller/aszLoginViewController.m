@@ -130,6 +130,20 @@
             self.debug.text =str;
             [self.progrees stopAnimating];
             self.loggedin=YES;
+            
+            
+            
+            //store default user and password on login success
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            [defaults setObject:self.userName.text forKey:@"user_default"];
+            [defaults setObject:self.password.text forKey:@"pass_default"];
+            
+            [defaults synchronize];
+            
+            
+            
+            
             [self viewNeedsUpdate];
             
         } onFailureCall:^(NSError *e) {
@@ -185,7 +199,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    //restore default pass and user
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *user = [defaults objectForKey:@"user_default"];
+    NSString *pass = [defaults objectForKey:@"pass_default"];
+    self.userName.text = user?user:@"deva.teacher";//TODO
+    self.password.text = pass?pass:@"123456";
+    
     [self viewNeedsUpdate];
 }
 
@@ -203,6 +224,7 @@
        
     }
 }
+
 
 @end
 

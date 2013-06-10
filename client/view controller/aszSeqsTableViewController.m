@@ -15,21 +15,27 @@
 @interface aszSeqsTableViewController ()
 
 @property (nonatomic,strong) NSArray *los;
-
+@property (nonatomic,strong) NSMutableDictionary *rowsTranslate;
 @property (nonatomic,strong) NSMutableArray *dlDataUrl;
 @property (nonatomic,assign) int dlcount;
+@property (nonatomic,strong) NSNumber *rowcount;
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
+@property (nonatomic,strong) NSMutableDictionary *cells;
+- (UITableViewCell *)cachedTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
 @implementation aszSeqsTableViewController
 
+@synthesize cells=_cells;
 @synthesize data=_data;
 @synthesize webdl=_webdl;
 @synthesize los=_los;
 @synthesize dlDataUrl=_dlDataUrl;
+@synthesize rowsTranslate=_rowsTranslate;
+@synthesize rowcount=_rowcount;
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -57,6 +63,8 @@
     self.dlDataUrl = [[NSMutableArray alloc]init];
     self.los = [self.data valueForKey:@"learningObjects"];
     self.dlcount=0;
+    self.rowcount= [NSNumber numberWithInt:0];
+    self.rowsTranslate=[[NSMutableDictionary alloc]init];
 }
 
 
@@ -76,14 +84,33 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)cachedTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if(!self.cells)
+        self.cells = [[NSMutableDictionary alloc]init];
+    
+    int row =  indexPath.row +(indexPath.section*1000);
+    
+   if(![self.rowsTranslate valueForKey:[NSString stringWithFormat:@"%d",row] ])
+    {
+        [self.rowsTranslate setValue:self.rowcount forKey:[NSString stringWithFormat:@"%d",row]];
+    
+        self.rowcount = [NSNumber numberWithInt: [self.rowcount integerValue]+1];
+    }
+
+    NSNumber *uu = [self.rowsTranslate valueForKey:[NSString stringWithFormat:@"%d",row]];
+    
+    NSString *key = [NSString stringWithFormat:@"%@", uu];
+    
+    if(![self.cells valueForKey:key]){
+    
+    
     static NSString *CellIdentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     NSArray *seqs = [[self.los objectAtIndex:indexPath.section] valueForKey:@"sequences"];
-    int row = [indexPath indexAtPosition:[indexPath length]-1 ];
-    NSDictionary *seq = [seqs objectAtIndex:row];
+        
+    NSDictionary *seq = [seqs objectAtIndex:indexPath.row];
     
     
     
@@ -107,20 +134,35 @@
     NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
     
     [connection execRequest:request OnSuccessCall:^(NSData *data) {
-    
         
-        [self.dlDataUrl addObject:data];
+        
+    [self.dlDataUrl addObject:data];
         
         
     } onFailureCall:^(NSError *e) {
         //wish i could help
     }];
     
+    
     cell.tag = self.dlcount;
     
     self.dlcount++;
     
+    [self.cells setValue:cell  forKey:key];
+        
     return cell;
+        
+    }
+    else{
+     return [self.cells valueForKey:key];   
+    }
+    
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self cachedTableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 
@@ -129,10 +171,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    static NSString *CellIdentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    NSLog(@"%ld",(long)indexPath.row);
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     NSData *jsonData =[self.dlDataUrl objectAtIndex:cell.tag];
 
