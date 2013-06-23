@@ -228,10 +228,13 @@
         
         self.webdl = segue.destinationViewController;
         
+        [segue.destinationViewController performSelector:@selector(setBackdelegate:)
+                                              withObject:self.splitViewController.delegate];
         
-      //  [segue.destinationViewController performSelector:@selector(setWebdl:)
-        //                                      withObject:self.webdl];
         
+        self.splitViewController.delegate = segue.destinationViewController;
+      
+  
     }
 }
 

@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface aszWebDlViewController : UIViewController
+@interface aszWebDlViewController : UIViewController <UISplitViewControllerDelegate>
 
 @property (nonatomic,strong) NSDictionary *data;
 
 @property (weak, nonatomic) IBOutlet UIWebView *dlWebView;
 
+@property (nonatomic,strong) UIPopoverController *masterPop;
 
-@property (nonatomic,weak) UIViewController *master;
+@property (nonatomic,weak) id<UISplitViewControllerDelegate> backdelegate;
 
 @end

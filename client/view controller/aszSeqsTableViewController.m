@@ -25,6 +25,10 @@
 
 - (UITableViewCell *)cachedTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+
+@property (nonatomic,strong) NSMutableArray *sections;
+
+
 @end
 
 @implementation aszSeqsTableViewController
@@ -44,8 +48,7 @@
     if (self) {
         
         [self.navigationItem setHidesBackButton:YES];
-        
-        
+    
     }
     return self;
 }
@@ -63,8 +66,42 @@
     self.dlDataUrl = [[NSMutableDictionary alloc]init];
     self.los = [self.data valueForKey:@"learningObjects"];
 
+  
+    /////////////////////////
+    
+    
+     NSString *courseId = [[self.data valueForKey:@"book"] valueForKey:@"courseCid"];
+    
+    self.sections = [[NSMutableArray alloc]initWithCapacity:[self.los count]];
+    
+    for(NSDictionary * lorningObj in self.los) //for each lorningObj in lorningObjs
+    {
+       
+        NSMutableArray *rows = [[NSMutableArray alloc]init];
+        
+        for(NSDictionary * seq in [lorningObj valueForKey:@"sequences"]) {//for each seq under the lo
+        
+            
+            [rows addObject: @{
+             @"courseId": courseId ,
+
+             @"loTitle": [seq valueForKey:@"title"] ,
+            
+             @"seqTitle": [seq valueForKey:@"title"] ,
+             @"thumbnailUrl":[seq valueForKey:@"thumbnailUrl"],
+             @"contentUrl":[seq valueForKey:@"contentUrl"]
+             
+             }];
+        }
+        
+        [self.sections addObject:[rows copy]];
+        
+    }
+    
+    //////////////////
 
 }
+
 
 
 
@@ -76,12 +113,12 @@
     return [self.los count];
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
     return [[[self.los objectAtIndex:section] valueForKey:@"sequences"]count];
-    
 }
+
 
 - (UITableViewCell *)cachedTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -161,7 +198,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%ld",(long)indexPath.row);
+   // NSLog(@"%ld",(long)indexPath.row);
+    
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     NSData *jsonData =[self.dlDataUrl valueForKey:[ NSString stringWithFormat:@"%d",cell.tag]];
@@ -169,8 +207,9 @@
     NSString *jsonDataString = [[NSString alloc] initWithData:jsonData
                                                                         encoding:NSUTF8StringEncoding];
     
-    aszWebDlViewController *wdl =(aszWebDlViewController *)self.webdl;
+    aszWebDlViewController *wdl = (aszWebDlViewController *)self.webdl;
     
+   // NSLog(@"%d",[self.splitViewController.viewControllers lastObject]==self);
 
     NSString *urlAddress = @"https://cto.timetoknow.com/cms/player/dl/index2.jsp";
    
