@@ -10,5 +10,6 @@
 
 @interface aszSeqPageViewContoller : UIPageViewController <UIPageViewControllerDelegate , UIPageViewControllerDataSource>
 
+@property (nonatomic,strong) NSDictionary *data;
 
 @end

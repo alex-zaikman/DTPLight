@@ -14,6 +14,4 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *dlWebView;
 
-- (void)prepRequestWith:(NSString *)jsonDataString andCourseId:(NSString *)courseId named:(NSString *)seqTitle;
-
 @end

@@ -15,7 +15,6 @@
 @interface aszSeqsTableViewController () 
 
 @property (nonatomic,strong) NSArray *los;
-@property (nonatomic,strong) NSMutableDictionary *dlDataUrl;
 
 @property (nonatomic,strong) NSMutableDictionary *cells;
 
@@ -25,9 +24,8 @@
 
 - (UITableViewCell *)cachedTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
-
-@property (nonatomic,strong) NSMutableArray *sections;
-
+@property (nonatomic,strong) NSArray *dlData;
+@property (nonatomic,strong) NSMutableDictionary *dlRequests;
 
 @end
 
@@ -37,7 +35,7 @@
 @synthesize data=_data;
 @synthesize webdl=_webdl;
 @synthesize los=_los;
-@synthesize dlDataUrl=_dlDataUrl;
+
 
 
 
@@ -56,23 +54,24 @@
 
 
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.modalInPopover=YES;
-   // [self.tableView registerClass:[ aszSeqsTableCell class] forCellReuseIdentifier:@"cell"];
 
-    self.dlDataUrl = [[NSMutableDictionary alloc]init];
     self.los = [self.data valueForKey:@"learningObjects"];
 
   
-    /////////////////////////
+    /////////////////////////////////////prep data////////////////////////////////////////////////////////
     
     
      NSString *courseId = [[self.data valueForKey:@"book"] valueForKey:@"courseCid"];
+     NSString *role = [[self.data valueForKey:@"user"] valueForKey:@"role"];
+     self.dlRequests= [[NSMutableDictionary alloc]init];
     
-    self.sections = [[NSMutableArray alloc]initWithCapacity:[self.los count]];
+    int acumulatedIndex = 0;
+    
+    NSMutableArray *sections = [[NSMutableArray alloc]initWithCapacity:[self.los count]];
     
     for(NSDictionary * lorningObj in self.los) //for each lorningObj in lorningObjs
     {
@@ -83,8 +82,12 @@
         
             
             [rows addObject: @{
+             
+             @"acumulatedIndex":[NSNumber numberWithInt:acumulatedIndex],
+             
              @"courseId": courseId ,
-
+             @"role":role,
+             
              @"loTitle": [seq valueForKey:@"title"] ,
             
              @"seqTitle": [seq valueForKey:@"title"] ,
@@ -92,13 +95,62 @@
              @"contentUrl":[seq valueForKey:@"contentUrl"]
              
              }];
+             acumulatedIndex++;
+            
+            
+            
+            NSDictionary __block *currentSeq = [rows lastObject];
+            
+            NSString __block *jsonUrl =  [currentSeq valueForKey:@"contentUrl"];
+            
+            aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
+            
+            NSURLRequest *request1 = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
+            
+            [connection execRequest:request1 OnSuccessCall:^(NSData *data) {
+                
+                
+                NSString *jsonDataString = [[NSString alloc] initWithData:data
+                                                                 encoding:NSUTF8StringEncoding];
+                
+                NSString *urlAddress = @"https://cto.timetoknow.com/cms/player/dl/index2.jsp";
+                
+                NSMutableString *mediaUrl=[[NSMutableString alloc]init];
+                
+                [mediaUrl appendString: @" &mediaUrl= \"/cms/courses/"];
+                
+                [mediaUrl appendString: [currentSeq valueForKey:@"courseId"]];
+                
+                [mediaUrl appendString: @"/\""];
+                
+                jsonDataString = [@"jsonStr=" stringByAppendingString:jsonDataString];
+                
+                jsonDataString =[jsonDataString stringByAppendingString:mediaUrl];
+                
+                jsonDataString = [jsonDataString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                
+                NSURLRequest *request2 = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"POST" withUrlParams:nil andBodyData:jsonDataString];
+                
+                
+                [self.dlRequests setObject:request2 forKey:[currentSeq valueForKey:@"acumulatedIndex"]];
+                
+                
+            } onFailureCall:^(NSError *e) {
+                //wish i could help
+            }];
+            
+            
         }
         
-        [self.sections addObject:[rows copy]];
+        [sections addObject:rows];
         
     }
     
-    //////////////////
+    self.dlData =[sections copy];
+
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 }
 
@@ -110,13 +162,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.los count];
+    return [self.dlData count];
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[self.los objectAtIndex:section] valueForKey:@"sequences"]count];
+    return [[self.dlData objectAtIndex:section] count];
 }
 
 
@@ -135,14 +187,9 @@
         static NSString *CellIdentifier = @"cell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-        NSArray *seqs = [[self.los objectAtIndex:indexPath.section] valueForKey:@"sequences"];
-        
-        NSDictionary *seq = [seqs objectAtIndex:indexPath.row];
+        NSDictionary *seq = [[self.dlData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]  ;
     
-    
-    
-    
-        cell.textLabel.text= [seq valueForKey:@"title"];
+        cell.textLabel.text= [seq valueForKey:@"seqTitle"];
     
         cell.textLabel.contentMode = UIViewContentModeScaleAspectFit;
     
@@ -153,27 +200,7 @@
     
         cell.imageView.image =     [ [self class]  imageWithImage:[UIImage imageWithData:bgImageData] scaledToSize:CGSizeMake(300,200)] ;
     
-    
-        NSString *jsonUrl = [seq valueForKey:@"contentUrl"];
-    
-        aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
-    
-        NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
-    
-        [connection execRequest:request OnSuccessCall:^(NSData *data) {
-        
-        
-            [self.dlDataUrl setValue:data forKey:key];
-        
-        
-    } onFailureCall:^(NSError *e) {
-        //wish i could help
-    }];
-    
-     
         cell.tag = ikey;
-    
-       //self.dlcount++;
     
     [self.cells setValue:cell  forKey:key];
         
@@ -198,43 +225,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // NSLog(@"%ld",(long)indexPath.row);
+  
     
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    NSData *jsonData =[self.dlDataUrl valueForKey:[ NSString stringWithFormat:@"%d",cell.tag]];
 
-    NSString *jsonDataString = [[NSString alloc] initWithData:jsonData
-                                                                        encoding:NSUTF8StringEncoding];
     
-    aszWebDlViewController *wdl = (aszWebDlViewController *)self.webdl;
+    NSNumber *acuIndex =  [[[self.dlData objectAtIndex:indexPath.section]objectAtIndex:indexPath.row] valueForKey:@"acumulatedIndex"];
     
-   // NSLog(@"%d",[self.splitViewController.viewControllers lastObject]==self);
+    NSURLRequest *req=[self.dlRequests objectForKey:acuIndex];
+ 
+    [((aszWebDlViewController *)self.webdl).dlWebView  loadRequest:req ];
 
-    NSString *urlAddress = @"https://cto.timetoknow.com/cms/player/dl/index2.jsp";
-   
-    NSMutableString *mediaUrl=[[NSMutableString alloc]init];
-    
-    [mediaUrl appendString: @" &mediaUrl= \"/cms/courses/"];
-    
-    NSString *courseId = [[self.data valueForKey:@"book"] valueForKey:@"courseCid"];
-    
-     [mediaUrl appendString: courseId];
-     [mediaUrl appendString: @"/\""];
-    
-    jsonDataString = [@"jsonStr=" stringByAppendingString:jsonDataString];
-     
-     jsonDataString =[jsonDataString stringByAppendingString:mediaUrl];
-   
-    jsonDataString = [jsonDataString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-      
-    NSURLRequest *request = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"POST" withUrlParams:nil andBodyData:jsonDataString];
-    
-    
-    //Load the request in the UIWebView.
-  //  wdl.dlWebView.scalesPageToFit=YES;
-    [wdl.dlWebView  loadRequest:request];
-    
+        
+ 
+        
     
 }
 
@@ -245,7 +248,7 @@
     
     NSString *headerTitle;
     
-    headerTitle = (NSString*)[[self.los objectAtIndex:section]  valueForKey:@"title"];
+    headerTitle = (NSString*)[[self.dlData objectAtIndex:section][0]  valueForKey:@"loTitle"];
     if(!headerTitle)
        headerTitle =@"lo";
     
