@@ -229,12 +229,13 @@
                     <navigationItem key="navigationItem" id="2XO-s5-A0m">
                         <barButtonItem key="rightBarButtonItem" title="pageView" id="dMz-mk-tpi">
                             <connections>
-                                <segue destination="JYy-0b-2iq" kind="push" splitViewControllerTargetIndex="1" id="yzV-8d-zpk"/>
+                                <action selector="openAsPageView:" destination="0Es-KL-6ao" id="xlP-i5-L7p"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="view" destination="tsa-wx-bsN" id="EJo-xX-qbW"/>
+                        <segue destination="JYy-0b-2iq" kind="modal" identifier="segPageView" modalPresentationStyle="pageSheet" id="omv-xw-7vE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B5H-bH-xkF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -282,45 +283,53 @@
         <!--Asz Seq Page View Contoller-->
         <scene sceneID="WmI-Mf-i74">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="JYy-0b-2iq" customClass="aszSeqPageViewContoller" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="MVV-2W-ixn"/>
-                </pageViewController>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="JYy-0b-2iq" customClass="aszSeqPageViewContoller" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wn3-ix-ea0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5422" y="-610"/>
+            <point key="canvasLocation" x="5532" y="-565"/>
         </scene>
         <!--Asz Seq Web Page View Controller-->
         <scene sceneID="jyj-DQ-19O">
             <objects>
                 <viewController storyboardIdentifier="aszSeqWebPageViewController" id="9S2-Dz-b7K" customClass="aszSeqWebPageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8IK-tV-7HX">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                        <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" id="kOZ-Xm-Y9V">
-                                <rect key="frame" x="59" y="60" width="648" height="894"/>
+                            <webView multipleTouchEnabled="YES" contentMode="scaleToFill" scalesPageToFit="YES" id="kOZ-Xm-Y9V">
+                                <rect key="frame" x="60" y="50" width="904" height="638"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </webView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HhV-6F-b0Y">
-                                <rect key="frame" x="59" y="18" width="648" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JZP-xb-bPr">
+                                <rect key="frame" x="0.0" y="0.0" width="22" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dissmisModal:" destination="9S2-Dz-b7K" eventType="touchUpInside" id="DeT-GF-7JW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="dlLable" destination="HhV-6F-b0Y" id="ZA2-Fe-xo2"/>
                         <outlet property="dlWebView" destination="kOZ-Xm-Y9V" id="a1F-gu-CL6"/>
                         <outlet property="view" destination="8IK-tV-7HX" id="FRf-e5-7J6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ig3-2s-Mnt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6246" y="-743"/>
+            <point key="canvasLocation" x="6442" y="-1085"/>
         </scene>
         <!--Asz Classes View Controller - Clesses-->
         <scene sceneID="4He-Mn-BQp">
@@ -408,6 +417,7 @@
                 <splitViewController wantsFullScreenLayout="YES" modalTransitionStyle="partialCurl" modalPresentationStyle="pageSheet" id="yxg-SX-P8G" customClass="aszSplitViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <segue destination="lWG-9W-0xL" kind="relationship" relationship="masterViewController" id="T0d-75-s92"/>
                         <segue destination="oOA-Pj-GoM" kind="relationship" relationship="detailViewController" id="UAn-YK-K5c"/>
@@ -439,6 +449,81 @@
     <resources>
         <image name="logo.jpg" width="161" height="83"/>
     </resources>
+    <classes>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="aszChapterOverviewViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszChapterOverviewViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="blabla" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="aszClassesViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszClassesViewCell.h"/>
+        </class>
+        <class className="aszClassesViewController" superclassName="UICollectionViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszClassesViewController.h"/>
+        </class>
+        <class className="aszCourseOverviewDetailViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszCourseOverviewDetailViewController.h"/>
+        </class>
+        <class className="aszDummyMasterViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszDummyMasterViewController.h"/>
+        </class>
+        <class className="aszLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszLoginViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="classesIB" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="debug" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="loginIB" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="logoutIB" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="progrees" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="userName" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="aszSeqPageViewContoller" superclassName="UIPageViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSeqPageViewContoller.h"/>
+        </class>
+        <class className="aszSeqWebPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSeqWebPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dissmisModal:"/>
+                <relationship kind="outlet" name="dlLable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dlWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="aszSeqsTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSeqsTableCell.h"/>
+        </class>
+        <class className="aszSeqsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSeqsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="openAsPageView:" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="aszSplitViewController" superclassName="UISplitViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszSplitViewController.h"/>
+        </class>
+        <class className="aszWebDlViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/aszWebDlViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goToClasses:"/>
+                <relationship kind="outlet" name="dlWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="tooBar" candidateClass="UINavigationItem"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

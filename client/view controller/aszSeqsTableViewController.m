@@ -226,18 +226,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   
-    
-
-    
     NSNumber *acuIndex =  [[[self.dlData objectAtIndex:indexPath.section]objectAtIndex:indexPath.row] valueForKey:@"acumulatedIndex"];
     
     NSURLRequest *req=[self.dlRequests objectForKey:acuIndex];
  
     [((aszWebDlViewController *)self.webdl).dlWebView  loadRequest:req ];
-
-        
- 
-        
+    
     
 }
 
@@ -274,7 +268,37 @@
 }
 
 
+- (IBAction)openAsPageView:(UIBarButtonItem *)sender {
+    
+    [self performSegueWithIdentifier:@"segPageView" sender:self ];
+    
+}
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if([[segue identifier] isEqualToString:@"segPageView"] ){
+        [segue.destinationViewController performSelector:@selector(setData:)
+                                              withObject:[self.dlRequests copy]];
+        
+        
+        NSIndexPath *path = [(UITableView*)self.view indexPathForSelectedRow];
+        
+        NSInteger rowNumber = 0;
+        
+        for (NSInteger i = 0; i < path.section; i++) {
+            rowNumber += [(UITableView*)self.view numberOfRowsInSection:i];
+        }
+        
+        rowNumber += path.row;
+        
+
+        
+        [segue.destinationViewController performSelector:@selector(setStartIndex:)
+                                              withObject:[NSNumber numberWithInt:rowNumber]];
+        
+    }
+    
+}
 
 @end
 

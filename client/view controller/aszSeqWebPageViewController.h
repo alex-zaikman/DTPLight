@@ -14,4 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *dlWebView;
 
+@property (nonatomic,assign) int index;
+
+
+@property (nonatomic,strong) NSURLRequest *req;
 @end

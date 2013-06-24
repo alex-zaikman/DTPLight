@@ -16,6 +16,28 @@
 @implementation aszSeqWebPageViewController
 
 
+- (IBAction)dissmisModal:(id)sender {
+    
+  [[self parentViewController] dismissModalViewControllerAnimated:YES];
+    
+}
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self=[super initWithCoder:aDecoder];
+    if(self){
+        
+   //  [_dlWebView loadRequest:self.req];
+        
+        
+    }
+    return self;
+    
+}
+
+-(void)viewDidLoad{
+    
+   // [self.dlWebView loadRequest:self.req];
+    
+}
 
 @end
