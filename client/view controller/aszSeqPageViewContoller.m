@@ -51,9 +51,6 @@
         
         for(int i =min ;i<=max ;i++){
             
-        NSNumber *lnsindex = [NSNumber numberWithInt:i];
-
-            
         ret = [storyboard instantiateViewControllerWithIdentifier:@"aszSeqWebPageViewController"];
     
         ret.index=i;
@@ -62,7 +59,9 @@
     
         ret.req=req;
         
-        [self.cash setObject:ret forKey:lnsindex];
+        [ret startLoading];
+            
+        [self.cash setObject:ret forKey:@(i)];
             
         }
         
@@ -78,16 +77,19 @@
             i1.index=index-1;
             
             i1.req=[self.data objectForKey:@(index-1)];;
+         
+            [i1 startLoading];
             
             [self.cash setObject:i1 forKey:@(index-1)];
          
-            
             // remouve i+2
             i1 = [storyboard instantiateViewControllerWithIdentifier:@"aszSeqWebPageViewController"];
             
             i1.index=index+2;
             
             i1.req=[self.data objectForKey:@(index+2)];
+            
+            [i1 startLoading];
             
             [self.cash setObject:i1 forKey:@(index+2)];
         }
@@ -101,6 +103,8 @@
             
             i1.req=[self.data objectForKey:@(index+1)];;
             
+            [i1 startLoading];
+            
             [self.cash setObject:i1 forKey:@(index+1)];
             
             // remouve i-2
@@ -109,6 +113,8 @@
             i1.index=index-2;
             
             i1.req=[self.data objectForKey:@(index-2)];
+            
+            [i1 startLoading];
             
             [self.cash setObject:i1 forKey:@(index-2)];
         
@@ -159,8 +165,9 @@
 //    UIViewController *currentViewController = self.viewControllers[0];
 //    NSArray *viewControllers = @[currentViewController];
 //    [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
-//    
-//    self.doubleSided = NO;
+
+    self.doubleSided = NO;
+    
     return UIPageViewControllerSpineLocationMin;
     
 }

@@ -10,12 +10,14 @@
 
 @interface aszSeqWebPageViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *dlLable;
 
-@property (weak, nonatomic) IBOutlet UIWebView *dlWebView;
+
+@property (strong, nonatomic)  UIWebView *dlWebView;
 
 @property (nonatomic,assign) int index;
 
-
 @property (nonatomic,strong) NSURLRequest *req;
+
+-(void) startLoading;
+
 @end

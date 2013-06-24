@@ -22,22 +22,33 @@
     
 }
 
--(id)initWithCoder:(NSCoder *)aDecoder{
-    self=[super initWithCoder:aDecoder];
-    if(self){
-        
-   //  [_dlWebView loadRequest:self.req];
-        
-        
-    }
-    return self;
+
+-(void) startLoading{
     
+    self.dlWebView = [[UIWebView alloc]init];
+    
+  //  self.dlWebView.scalesPageToFit =YES;
+    
+    self.dlWebView.multipleTouchEnabled =YES;
+    
+    [self.view addSubview:self.dlWebView];
+    
+    [self.dlWebView loadRequest:self.req];
+        
 }
 
--(void)viewDidLoad{
+
+-(void) viewWillLayoutSubviews{
     
-   // [self.dlWebView loadRequest:self.req];
-    
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        
+        [self.dlWebView setFrame:CGRectMake(60,50,645,638)];
+        
+    } else {
+        
+        [self.dlWebView setFrame:CGRectMake(60,50,645,900)];
+        
+    }
 }
 
 @end
