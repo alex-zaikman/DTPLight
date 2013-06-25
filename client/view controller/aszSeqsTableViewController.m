@@ -30,6 +30,7 @@
 @property (nonatomic,strong) NSMutableDictionary *dlRequests;
 
 
++(NSMutableDictionary*)dataForPageing:(NSDictionary*)data;
 
 @end
 
@@ -55,7 +56,98 @@
     return self;
 }
 
++(NSMutableDictionary*)dataForPageing:(NSDictionary*)data{
+    
+    NSDictionary *los = [data valueForKey:@"learningObjects"];
+    
+    
+    NSString *courseId = [[data valueForKey:@"book"] valueForKey:@"courseCid"];
+    NSString *role = [[data valueForKey:@"user"] valueForKey:@"role"];
+    
+    NSMutableDictionary *dlRequests= [[NSMutableDictionary alloc]init];
+    
+    int acumulatedIndex=0;
+    
+    for(NSDictionary * lorningObj in los) //for each lorningObj in lorningObjs
+    {
+        
+        for(NSDictionary * seq in [lorningObj valueForKey:@"sequences"]) {//for each seq under the lo
+            
+            
+            NSDictionary __block *currentSeq = @{
+                                                 @"acumulatedIndex": @(acumulatedIndex),
+                                                 @"courseId": courseId ,
+                                                 @"role":role,
+                                                 @"loTitle": [seq valueForKey:@"title"] ,
+                                                 @"seqTitle": [seq valueForKey:@"title"] ,
+                                                 @"thumbnailUrl":[seq valueForKey:@"thumbnailUrl"],
+                                                 @"contentUrl":[seq valueForKey:@"contentUrl"]
+                                                };
+            acumulatedIndex++;
+            
+            NSString __block *jsonUrl =  [currentSeq valueForKey:@"contentUrl"];
+            
+            aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
+            
+            NSURLRequest *request1 = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
+            
+            [connection execRequest:request1 OnSuccessCall:^(NSData *data) {
+                
+                
+                ///player data
+                NSString *jsonDataString = [[NSString alloc] initWithData:data
+                                                                 encoding:NSUTF8StringEncoding];
+                
+                
+                //html addres
+                NSString *urlAddress = @"http://cto.timetoknow.com/cms/player/dl/index2.html";
+                
+                
+                //media url
+                NSMutableString *mediaUrl=[[NSMutableString alloc]init];
+                
+                [mediaUrl appendString: @"\"/cms/courses/"];
+                
+                [mediaUrl appendString: [currentSeq valueForKey:@"courseId"]];
+                
+                [mediaUrl appendString: @"\""];
+                
+                //init data
+                NSMutableString *initData=[[NSMutableString alloc]init];
+                
+                [initData appendString:@"{ width: 1024, height: 600, scale: 1, basePaths: { player:"];
+                
+                //this.playerPath
+                [initData appendString: @"\"http://cto.timetoknow.com/cms/player/dl\""];
+                
+                
+                [initData appendString: @", media:"];
+                
+                [initData appendString: mediaUrl];
+                
+                [initData appendString: @"}, complay:true, localeName:\"en_US\",   apiVersion: '1.0',  loId: 'inst_s', isLoggingEnabled: true, userInfo : { role: '"];
+                
+                [initData appendString:@"student"];//[initData appendString:role];
+                
+                [initData appendString:  @"' }   }"];
+                
+                NSURLRequest *request2 = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
+                
+                aszUIWebViewDelegate *delegate = [[aszUIWebViewDelegate alloc]initWtihData:@[initData  ,jsonDataString ]];
+                
+                [dlRequests setObject:@[request2,  delegate  ] forKey:[currentSeq valueForKey:@"acumulatedIndex"]];
+                
+            } onFailureCall:^(NSError *e) {
+                //wish i could help
+            }];
+            
+        }
+        
+    }
+    
+    return dlRequests;
 
+}
 
 
 - (void)viewDidLoad
@@ -100,83 +192,7 @@
              
              }];
              acumulatedIndex++;
-            
-            
-            
-            NSDictionary __block *currentSeq = [rows lastObject];
-            
-            NSString __block *jsonUrl =  [currentSeq valueForKey:@"contentUrl"];
-            
-            aszHttpConnectionHandler *connection = [[aszHttpConnectionHandler alloc]init];
-            
-            NSURLRequest *request1 = [aszHttpConnectionHandler requestWithUrl:jsonUrl usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
-            
-            [connection execRequest:request1 OnSuccessCall:^(NSData *data) {
-                
-                
-               ///player data
-                NSString *jsonDataString = [[NSString alloc] initWithData:data
-                                                                 encoding:NSUTF8StringEncoding];
-                
-                
-                //html addres
-                NSString *urlAddress = @"http://cto.timetoknow.com/cms/player/dl/index2.html";
-                
-                
-                //media url
-                NSMutableString *mediaUrl=[[NSMutableString alloc]init];
-                
-                [mediaUrl appendString: @"\"/cms/courses/"];
-                
-                [mediaUrl appendString: [currentSeq valueForKey:@"courseId"]];
-                
-                [mediaUrl appendString: @"\""];
-                
-               //init data
-                 NSMutableString *initData=[[NSMutableString alloc]init];
-                
-                [initData appendString:@"{ width: 1024, height: 600, scale: 1, basePaths: { player:"];
-                
-                //this.playerPath
-                [initData appendString: @"\"http://cto.timetoknow.com/cms/player/dl\""];
-
-                
-               [initData appendString: @", media:"];
-                
-               [initData appendString: mediaUrl];
-                
-               [initData appendString: @"}, complay:true, localeName:\"en_US\",   apiVersion: '1.0',  loId: 'inst_s', isLoggingEnabled: true, userInfo : { role: '"];
-               
-                 [initData appendString:@"student"];//[initData appendString:role];
-                
-                [initData appendString:  @"' }   }"];
-                
-                
-                
-                
-                
-             //   jsonDataString = [@"jsonStr=" stringByAppendingString:jsonDataString];
-                
-            //    jsonDataString =[jsonDataString stringByAppendingString:mediaUrl];
-                
-            //    jsonDataString = [jsonDataString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                
-            
-                
-                
-                
-                NSURLRequest *request2 = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
-                
-               aszUIWebViewDelegate *delegate = [[aszUIWebViewDelegate alloc]initWtihData:@[initData  ,jsonDataString ]];
-                
-                [self.dlRequests setObject:@[request2,  delegate  ] forKey:[currentSeq valueForKey:@"acumulatedIndex"]];
-                
-                
-            } onFailureCall:^(NSError *e) {
-                //wish i could help
-            }];
-            
-            
+                      
         }
         
         [sections addObject:rows];
@@ -188,7 +204,7 @@
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+    self.dlRequests =[aszSeqsTableViewController dataForPageing:self.data];
 }
 
 

@@ -52,11 +52,11 @@
     
         [js appendString:@");"];
     
-    NSLog(@"%@",js);
+    //NSLog(@"%@",js);
     
     
     NSMutableString *javaScript =[[NSMutableString alloc]init];
-    [javaScript appendString: @"var boo =function(){   setTimeout(function(){             "];
+    [javaScript appendString: @"var boo =function(){   setTimeout(function(){  "];
     [javaScript appendString:js  ];
     [javaScript appendString: @"   },0);    };  "];
     
