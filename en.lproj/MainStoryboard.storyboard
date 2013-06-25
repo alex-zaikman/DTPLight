@@ -283,7 +283,9 @@
         <!--Asz Seq Page View Contoller-->
         <scene sceneID="WmI-Mf-i74">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="JYy-0b-2iq" customClass="aszSeqPageViewContoller" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="JYy-0b-2iq" customClass="aszSeqPageViewContoller" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="v7x-Fs-4fv"/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wn3-ix-ea0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5532" y="-565"/>

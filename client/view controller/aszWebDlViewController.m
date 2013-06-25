@@ -60,7 +60,6 @@
 }
 
 
-
 -(void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc{
     barButtonItem.title=@"Sequenses menu";
     self.tooBar.rightBarButtonItem = barButtonItem;
@@ -70,7 +69,7 @@
 -(void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem{
 
     self.tooBar.rightBarButtonItem = nil;
-    //self.masterPop=nil;
+    self.masterPop=nil;
 }
 
 @end

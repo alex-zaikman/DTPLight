@@ -10,14 +10,21 @@
 
 @implementation aszSeqsTableCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
+        
+
+        
     }
     return self;
+    
+    
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

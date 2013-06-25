@@ -29,6 +29,8 @@
 @property (nonatomic,strong) NSArray *dlData;
 @property (nonatomic,strong) NSMutableDictionary *dlRequests;
 
+
+
 @end
 
 @implementation aszSeqsTableViewController
@@ -251,8 +253,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self cachedTableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    UITableViewCell *cell = [self cachedTableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    
+    return cell;
 }
+
 
 
 
@@ -315,7 +322,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    if([[segue identifier] isEqualToString:@"segPageView"] ){
+if([[segue identifier] isEqualToString:@"segPageView"]){
         [segue.destinationViewController performSelector:@selector(setData:)
                                               withObject:[self.dlRequests copy]];
         
@@ -330,10 +337,12 @@
         
         rowNumber += path.row;
         
-
+        
         
         [segue.destinationViewController performSelector:@selector(setStartIndex:)
                                               withObject:[NSNumber numberWithInt:rowNumber]];
+        
+
         
     }
     
