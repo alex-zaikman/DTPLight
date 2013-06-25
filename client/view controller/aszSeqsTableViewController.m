@@ -11,6 +11,8 @@
 #import "aszHttpConnectionHandler.h"
 #import "aszJsonDictionarryManip.h"
 #import "aszWebDlViewController.h"
+#import "aszUIWebViewDelegate.h"
+
 
 @interface aszSeqsTableViewController () 
 
@@ -110,29 +112,62 @@
             [connection execRequest:request1 OnSuccessCall:^(NSData *data) {
                 
                 
+               ///player data
                 NSString *jsonDataString = [[NSString alloc] initWithData:data
                                                                  encoding:NSUTF8StringEncoding];
                 
-                NSString *urlAddress = @"https://cto.timetoknow.com/cms/player/dl/index2.jsp";
                 
+                //html addres
+                NSString *urlAddress = @"http://cto.timetoknow.com/cms/player/dl/index2.html";
+                
+                
+                //media url
                 NSMutableString *mediaUrl=[[NSMutableString alloc]init];
                 
-                [mediaUrl appendString: @" &mediaUrl= \"/cms/courses/"];
+                [mediaUrl appendString: @"\"/cms/courses/"];
                 
                 [mediaUrl appendString: [currentSeq valueForKey:@"courseId"]];
                 
-                [mediaUrl appendString: @"/\""];
+                [mediaUrl appendString: @"\""];
                 
-                jsonDataString = [@"jsonStr=" stringByAppendingString:jsonDataString];
+               //init data
+                 NSMutableString *initData=[[NSMutableString alloc]init];
                 
-                jsonDataString =[jsonDataString stringByAppendingString:mediaUrl];
+                [initData appendString:@"{ width: 1024, height: 600, scale: 1, basePaths: { player:"];
                 
-                jsonDataString = [jsonDataString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                //this.playerPath
+                [initData appendString: @"\"http://cto.timetoknow.com/cms/player/dl\""];
+
                 
-                NSURLRequest *request2 = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"POST" withUrlParams:nil andBodyData:jsonDataString];
+               [initData appendString: @", media:"];
+                
+               [initData appendString: mediaUrl];
+                
+               [initData appendString: @"}, complay:true, localeName:\"en_US\",   apiVersion: '1.0',  loId: 'inst_s', isLoggingEnabled: true, userInfo : { role: '"];
+               
+                 [initData appendString:@"student"];//[initData appendString:role];
+                
+                [initData appendString:  @"' }   }"];
                 
                 
-                [self.dlRequests setObject:request2 forKey:[currentSeq valueForKey:@"acumulatedIndex"]];
+                
+                
+                
+             //   jsonDataString = [@"jsonStr=" stringByAppendingString:jsonDataString];
+                
+            //    jsonDataString =[jsonDataString stringByAppendingString:mediaUrl];
+                
+            //    jsonDataString = [jsonDataString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                
+            
+                
+                
+                
+                NSURLRequest *request2 = [aszHttpConnectionHandler requestWithUrl:urlAddress usingMethod:@"GET" withUrlParams:nil andBodyData:nil];
+                
+               aszUIWebViewDelegate *delegate = [[aszUIWebViewDelegate alloc]initWtihData:@[initData  ,jsonDataString ]];
+                
+                [self.dlRequests setObject:@[request2,  delegate  ] forKey:[currentSeq valueForKey:@"acumulatedIndex"]];
                 
                 
             } onFailureCall:^(NSError *e) {
@@ -228,9 +263,13 @@
   
     NSNumber *acuIndex =  [[[self.dlData objectAtIndex:indexPath.section]objectAtIndex:indexPath.row] valueForKey:@"acumulatedIndex"];
     
-    NSURLRequest *req=[self.dlRequests objectForKey:acuIndex];
- 
+    NSURLRequest *req=[self.dlRequests  objectForKey:acuIndex][0];
+
+    
+    ((aszWebDlViewController *)self.webdl).dlWebView.delegate = [self.dlRequests  objectForKey:acuIndex][1];
+    
     [((aszWebDlViewController *)self.webdl).dlWebView  loadRequest:req ];
+    
     
     
 }

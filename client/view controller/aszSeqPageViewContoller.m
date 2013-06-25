@@ -47,7 +47,7 @@
         [self.cash removeAllObjects];
         
         int min = MAX((int)index-1,0);
-        int max= MIN(index+1 , [self.data count]-1);
+        int max= MIN(index+1 , (int)[self.data count]-1);
         
         for(int i =min ;i<=max ;i++){
             
@@ -55,7 +55,7 @@
     
         ret.index=i;
     
-        NSURLRequest *req=[self.data objectForKey:@(i)];
+        NSArray *req=[self.data objectForKey:@(i)];
     
         ret.req=req;
         

@@ -33,7 +33,9 @@
     
     [self.view addSubview:self.dlWebView];
     
-    [self.dlWebView loadRequest:self.req];
+    self.dlWebView.delegate=self.req[1];
+    
+    [self.dlWebView loadRequest:self.req[0]];
         
 }
 

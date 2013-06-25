@@ -16,7 +16,7 @@
 
 @property (nonatomic,assign) int index;
 
-@property (nonatomic,strong) NSURLRequest *req;
+@property (nonatomic,strong) NSArray *req;
 
 -(void) startLoading;
 
