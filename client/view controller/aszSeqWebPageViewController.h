@@ -11,6 +11,7 @@
 @interface aszSeqWebPageViewController : UIViewController
 
 
+@property (weak, nonatomic) IBOutlet UILabel *pageCount;
 
 @property (strong, nonatomic)  UIWebView *dlWebView;
 
@@ -18,6 +19,6 @@
 
 @property (nonatomic,strong) NSArray *req;
 
--(void) startLoading;
+-(void) startLoadingWithTitle: (NSString*)title;
 
 @end

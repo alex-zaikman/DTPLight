@@ -11,6 +11,8 @@
 
 @interface aszSeqWebPageViewController ()
 
+@property (nonatomic,strong) NSString* title;
+
 @end
 
 @implementation aszSeqWebPageViewController
@@ -22,8 +24,15 @@
     
 }
 
+-(void)viewDidLoad{
+    self.pageCount.text=self.title;
+}
 
--(void) startLoading{
+
+-(void) startLoadingWithTitle:(NSString*)title{
+    
+    self.title=title;
+    
     
     self.dlWebView = [[UIWebView alloc]init];
     

@@ -59,7 +59,11 @@
     
         ret.req=req;
         
-        [ret startLoading];
+           
+            
+        [ret startLoadingWithTitle: [NSString stringWithFormat:@"%d of %d", i+1 , (int)[self.data count]]];
+            
+      
             
         [self.cash setObject:ret forKey:@(i)];
             
@@ -78,7 +82,8 @@
             
             i1.req=[self.data objectForKey:@(index-1)];;
          
-            [i1 startLoading];
+            [i1 startLoadingWithTitle: [NSString stringWithFormat:@"%d of %d", index , (int)[self.data count]]];
+            
             
             [self.cash setObject:i1 forKey:@(index-1)];
          
@@ -89,7 +94,9 @@
             
             i1.req=[self.data objectForKey:@(index+2)];
             
-            [i1 startLoading];
+              [i1 startLoadingWithTitle: [NSString stringWithFormat:@"%d of %d", index+3 , (int)[self.data count]]];
+            
+         
             
             [self.cash setObject:i1 forKey:@(index+2)];
         }
@@ -103,7 +110,8 @@
             
             i1.req=[self.data objectForKey:@(index+1)];;
             
-            [i1 startLoading];
+              [i1 startLoadingWithTitle: [NSString stringWithFormat:@"%d of %d", index+2 , (int)[self.data count]]];
+           
             
             [self.cash setObject:i1 forKey:@(index+1)];
             
@@ -114,7 +122,10 @@
             
             i1.req=[self.data objectForKey:@(index-2)];
             
-            [i1 startLoading];
+              [i1 startLoadingWithTitle: [NSString stringWithFormat:@"%d of %d", index-1 , (int)[self.data count]]];
+            
+            
+            [i1.view setNeedsDisplay];
             
             [self.cash setObject:i1 forKey:@(index-2)];
         

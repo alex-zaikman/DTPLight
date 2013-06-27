@@ -32,13 +32,6 @@
 
 -(void) webViewDidFinishLoad:(UIWebView *)webView{
 
-   // static BOOL flag=YES;
-  //  if(flag){
-  //      flag=NO;
-    
-  //  NSString *javaScript = @"var boo =function(){alert('boo');};";
-  //  [webView stringByEvaluatingJavaScriptFromString:javaScript];
-    
     
         NSMutableString *js=[[NSMutableString alloc]init];
     
@@ -60,12 +53,9 @@
     [javaScript appendString:js  ];
     [javaScript appendString: @"   },0);    };  "];
     
-        [webView stringByEvaluatingJavaScriptFromString: javaScript ];
+    [webView stringByEvaluatingJavaScriptFromString: javaScript ];
  
-     
-  //  }
-    //flag=YES;
-    //
+
 }
 
 
